@@ -1,22 +1,114 @@
 package de.phip1611.linked_lists;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-
 /**
- * Created by phip1611 on 14.04.16.
+ * This is part of my Lists-Implementation.
+ *
+ * @author Philipp Schuster | https://phip1611.de | @phip1611
+ *
+ *
+ * A implementation of a SimpleList that is awesome!
  */
 public class SimpleList<T> extends LinearList<T> {
 
+    public SimpleList() {
+        super();
+    }
 
     /**
-     * Get the Number of Elements in the List!
+     * Appends data to the List.
+     *
+     * @param le
+     */
+    @Override
+    public void append(LinearListElement<T> le) {
+        // Liste ist noch leer
+        if (this.listBegin == null) {
+            this.listBegin = le;
+        } else {
+            SimpleListElement current = (SimpleListElement) this.listBegin;
+            while (current.getNext() != null) {
+                current = (SimpleListElement) current.getNext();
+            }
+            current.setNext(le);
+        }
+        this.elementsCount++;
+    }
+
+    /**
+     * Appends data to the List.
+     *
+     * @param value
+     */
+    @Override
+    public void append(T value) {
+        this.append(new SimpleListElement<T>(value));
+    }
+
+    /**
+     * Inserts data to the List.
+     *
+     * @param index
+     * @param le
+     */
+    @Override
+    public void insert(Integer index, LinearListElement<T> le) {
+
+    }
+
+    /**
+     * Inserts data to the List.
+     *
+     * @param index
+     * @param value
+     */
+    @Override
+    public void insert(Integer index, T value) {
+
+    }
+
+
+    /**
+     * Returns the last Element and deletes it.
+     * For example if you wan't ro realize a stack
+     * this shit is cool as fuck!
      *
      * @return
      */
     @Override
-    public int getElementsCount() {
-        return 0;
+    public T pop() {
+        return null;
+    }
+
+    /**
+     * Returns Element of a List at index.
+     *
+     * @param index
+     * @return
+     */
+    @Override
+    public T getElement(Integer index) {
+        return null;
+    }
+
+    /**
+     * Returns content/value of a List at index.
+     *
+     * @param index
+     * @return
+     */
+    @Override
+    public T get(Integer index) {
+        return null;
+    }
+
+    /**
+     * Delets the List-Element at index.
+     *
+     * @param index
+     */
+    @Override
+    public void delete(Integer index) {
+
     }
 
     /**
@@ -26,7 +118,7 @@ public class SimpleList<T> extends LinearList<T> {
      * @return
      */
     @Override
-    public boolean find(ListElement le) {
+    public boolean isInList(ListElement le) {
         return false;
     }
 
@@ -37,16 +129,8 @@ public class SimpleList<T> extends LinearList<T> {
      * @return
      */
     @Override
-    public boolean find(T value) {
+    public boolean isInList(T value) {
         return false;
-    }
-
-    /**
-     * Clears a list / wipe's the fuck out of all elements.
-     */
-    @Override
-    public void clear() {
-
     }
 
     /**
@@ -82,50 +166,16 @@ public class SimpleList<T> extends LinearList<T> {
     }
 
     /**
-     * Returns an iterator over elements of type {@code T}.
-     *
-     * @return an Iterator.
+     * Clears a data structure / wipe's the fuck out of it.
      */
     @Override
-    public Iterator<ListElement> iterator() {
-        return null;
+    public void clear() {
+        this.listBegin = null;
+        this.elementsCount = null;
+        // Garbage Collection should kill all the elements
+        // cause they never will be used again
     }
 
-    /**
-     * Returns {@code true} if the iteration has more elements.
-     * (In other words, returns {@code true} if {@link #next} would
-     * return an element rather than throwing an exception.)
-     *
-     * @return {@code true} if the iteration has more elements
-     */
-    @Override
-    public boolean hasNext() {
-        return false;
-    }
 
-    /**
-     * Returns the next element in the iteration.
-     *
-     * @retur‚n the next element in the iteration
-     * @throws NoSuchElementException if the iteration has no more elements
-     */
-    @Override
-    public ListElement next() {
-        return null;
-    }
 
-    @Override
-    public void append(ListElement<T> le) {
-
-    }
-
-    @Override
-    public ListElement<T> pop(ListElement<T> le) {
-        return null;
-    }
-
-    @Override
-    public void delete(Integer index) {
-
-    }
 }

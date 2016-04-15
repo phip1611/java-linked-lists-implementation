@@ -1,19 +1,14 @@
 package de.phip1611.linked_lists;
 
 /**
- * Created by phip1611 on 14.04.16.
+ * Abstract representation of a List Element.
  */
 public abstract class ListElement<T> {
 
     /**
      * The value of the List-Element. Can be everything you want!
      */
-    private T value;
-
-    /**
-     * Referenz auf den Listenanfang.
-     */
-    private ListElement firstElement;
+    protected T value;
 
     /**
      * Value of ListElement shall be set once at init.
@@ -21,7 +16,6 @@ public abstract class ListElement<T> {
      */
     public ListElement(T value) {
         this.value = value;
-        this.firstElement = null;
     }
 
     /**
@@ -38,5 +32,13 @@ public abstract class ListElement<T> {
      */
     public T getValue() {
         return value;
+    }
+
+    /**
+     * Set the Value of the ListElement
+     * @param value
+     */
+    public void setValue(T value) {
+        this.value = value;
     }
 }

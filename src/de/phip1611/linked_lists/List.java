@@ -1,51 +1,46 @@
 package de.phip1611.linked_lists;
 
-import java.util.Iterator;
-
 /**
- * Created by phip1611 on 14.04.16.
+ * This is part of my Lists-Implementation.
+ *
+ * @author Philipp Schuster | https://phip1611.de | @phip1611
+ *
+ *
+ * Abstract representation of a List.
  */
-public abstract class List<T> implements Iterator<ListElement>, Iterable<ListElement> {
+public abstract class List<T> implements Clearable {
+
     /**
-     * You will need this to make Lists iterable and to find out at
-     * which point of iteration you are right know.
+     * The internal Counter for Elements in the List.
      */
-    private Integer iterateCount;
+    protected Integer elementsCount;
 
     /**
      * Reference to the very first Element of the list/the beginning.
      */
-    private ListElement<T> firstElement;
-
-    /**
-     * Alle List-Elemente
-     */
-    private ListElement<T>[] listElements;
+    protected ListElement<T> listBegin;
 
     /**
      * Get the Number of Elements in the List!
      * @return
      */
-    public abstract int getElementsCount();
+    public int getElementsCount() {
+        return this.elementsCount;
+    }
 
     /**
      * Determine if a specific ListElement is already in the List!
      * @param le
      * @return
      */
-    public abstract boolean find(ListElement le);
+    public abstract boolean isInList(ListElement le);
 
     /**
      * Determine if a specific value is already in the List (in an ListElement)!
      * @param value
      * @return
      */
-    public abstract boolean find(T value);
-
-    /**
-     * Clears a list / wipe's the fuck out of all elements.
-     */
-    public abstract void clear();
+    public abstract boolean isInList(T value);
 
     /**
      * Deletes all Elements in the List that matches the parameter.
@@ -71,8 +66,7 @@ public abstract class List<T> implements Iterator<ListElement>, Iterable<ListEle
      * Set-Up the list.
      */
     public List() {
-        this.iterateCount = new Integer(0);
-        this.firstElement = null;
-        this.listElements = null;
+        this.listBegin = null;
+        this.elementsCount = 0;
     }
 }

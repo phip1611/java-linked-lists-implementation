@@ -1,69 +1,100 @@
 package de.phip1611.linked_lists;
 
-import java.util.Iterator;
-
 /**
- * Created by phip1611 on 15.04.16.
+ * This is part of my Lists-Implementation.
+ *
+ * @author Philipp Schuster | https://phip1611.de | @phip1611
+ *
+ *
+ * A list where each List Element knows what's the
+ * next and whats the previous Element.
  */
-public class BidirectionalList extends List implements LinearList {
+public class BidirectionalList<T> extends LinearList<T> {
 
     /**
-     * Append a ListElement
+     * Appends data to the List.
      *
      * @param le
-     * @return
      */
     @Override
-    public boolean append(ListElement le) {
-        return false;
+    public void append(LinearListElement<T> le) {
+
     }
 
     /**
-     * Insert a ListElement at Position x.
+     * Appends data to the List.
      *
-     * @param x
-     * @param le
-     * @return
+     * @param value
      */
     @Override
-    public boolean insert(Integer x, ListElement le) {
-        return false;
+    public void append(T value) {
+
     }
 
     /**
-     * Deletes one Element at index/position.
+     * Inserts data to the List.
+     *
+     * @param index
+     * @param le
+     */
+    @Override
+    public void insert(Integer index, LinearListElement<T> le) {
+
+    }
+
+    /**
+     * Inserts data to the List.
+     *
+     * @param index
+     * @param value
+     */
+    @Override
+    public void insert(Integer index, T value) {
+
+    }
+
+    /**
+     * Returns the last Element and deletes it.
+     * For example if you wan't ro realize a stack
+     * this shit is cool as fuck!
+     *
+     * @return
+     */
+    @Override
+    public T pop() {
+        return null;
+    }
+
+    /**
+     * Returns Element of a List at index.
+     *
+     * @param index
+     * @return
+     */
+    @Override
+    public T getElement(Integer index) {
+        return null;
+    }
+
+    /**
+     * Returns content/value of a List at index.
+     *
+     * @param index
+     * @return
+     */
+    @Override
+    public T get(Integer index) {
+        return null;
+    }
+
+    /**
+     * Delets the List-Element at index.
      *
      * @param index
      */
     @Override
-    public boolean delete(int index) {
-        return false;
-    }
-
-    /**
-     * Returns the last element and deletes it from the List.
-     *
-     * @param le
-     * @return
-     */
-    @Override
-    public boolean pop(ListElement le) {
-        return false;
-    }
-
-    @Override
     public void delete(Integer index) {
 
-    }
-
-    /**
-     * Get the Number of Elements in the List!
-     *
-     * @return
-     */
-    @Override
-    public int getElementsCount() {
-        return 0;
     }
 
     /**
@@ -73,7 +104,7 @@ public class BidirectionalList extends List implements LinearList {
      * @return
      */
     @Override
-    public boolean find(ListElement le) {
+    public boolean isInList(ListElement le) {
         return false;
     }
 
@@ -84,16 +115,8 @@ public class BidirectionalList extends List implements LinearList {
      * @return
      */
     @Override
-    public boolean find(Object value) {
+    public boolean isInList(T value) {
         return false;
-    }
-
-    /**
-     * Clears a list / wipe's the fuck out of all elements.
-     */
-    @Override
-    public void clear() {
-
     }
 
     /**
@@ -114,7 +137,7 @@ public class BidirectionalList extends List implements LinearList {
      * @return
      */
     @Override
-    public boolean deleteAll(Object value) {
+    public boolean deleteAll(T value) {
         return false;
     }
 
@@ -129,13 +152,11 @@ public class BidirectionalList extends List implements LinearList {
     }
 
     /**
-     * Returns an iterator over elements of type {@code T}.
-     *
-     * @return an Iterator.
+     * Clears a data structure / wipe's the fuck out of it.
      */
     @Override
-    public Iterator iterator() {
-        return null;
+    public void clear() {
+
     }
 
     /**
@@ -148,16 +169,5 @@ public class BidirectionalList extends List implements LinearList {
     @Override
     public boolean hasNext() {
         return false;
-    }
-
-    /**
-     * Returns the next element in the iteration.
-     *
-     * @return the next element in the iteration
-     * @throws NoSuchElementException if the iteration has no more elements
-     */
-    @Override
-    public Object next() {
-        return null;
     }
 }
