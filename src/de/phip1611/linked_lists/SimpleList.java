@@ -20,8 +20,11 @@ public class SimpleList<T> extends LinearList<T> {
      * @param le
      */
     @Override
-    public void append(LinearListElement<T> le) {
+    public void append(LinearListElement<T> le) throws ListMaxSizeExceededException {
         // Liste ist noch leer
+        if (this.elementCount == List.MAX_SIZE) {
+            throw new ListMaxSizeExceededException();
+        }
         if (this.listBegin == null) {
             this.listBegin = le;
         } else {
@@ -31,7 +34,7 @@ public class SimpleList<T> extends LinearList<T> {
             }
             current.setNext(le);
         }
-        this.elementsCount++;
+        this.elementCount++;
     }
 
     /**
@@ -40,35 +43,67 @@ public class SimpleList<T> extends LinearList<T> {
      * @param value
      */
     @Override
-    public void append(T value) {
+    public void append(T value) throws ListMaxSizeExceededException {
         this.append(new SimpleListElement<T>(value));
     }
 
     /**
-     * Inserts data to the List.
+     * Inserts data to the List. Index starts at 1.
      *
-     * @param index
+     * @param index 0-
      * @param le
      */
     @Override
-    public void insert(Integer index, LinearListElement<T> le) {
+    public boolean insert(Integer index, LinearListElement<T> le) throws ListMaxSizeExceededException {
+        if (this.elementCount == List.MAX_SIZE) {
+            throw new ListMaxSizeExceededException();
+        }
 
+        int count = List.LIST_BEGIN;
+
+        if (index < List.LIST_BEGIN || index > this.elementCount) {
+            return false;
+        }
+        if (this.listBegin == null && index == 1) {
+            this.listBegin = le;
+            return true;
+        }
+        if (index == List.LIST_BEGIN) {
+            le.setNext(this.listBegin);
+            this.listBegin = le;
+            return true;
+        } else {
+            SimpleListElement<T> previousElement, listElement;
+            previousElement = null;
+            listElement = (SimpleListElement<T>) this.listBegin;
+            while (listElement != null) {
+                if (index.equals(count)) {
+                    previousElement.setNext(le);
+                    le.setNext(listElement);
+                    return true;
+                }
+                previousElement = listElement;
+                listElement = (SimpleListElement<T>) listElement.getNext();
+                count++;
+            }
+        }
+        return false; // this point should never be reached but its a fallback
     }
 
     /**
-     * Inserts data to the List.
+     * Inserts data to the List. Index starts at 1.
      *
      * @param index
      * @param value
      */
     @Override
-    public void insert(Integer index, T value) {
-
+    public boolean insert(Integer index, T value) throws ListMaxSizeExceededException {
+        return this.insert(index, new SimpleListElement<T>(value));
     }
 
 
     /**
-     * Returns the last Element and deletes it.
+     * Returns the last Elements value and deletes from the list it.
      * For example if you wan't ro realize a stack
      * this shit is cool as fuck!
      *
@@ -76,7 +111,25 @@ public class SimpleList<T> extends LinearList<T> {
      */
     @Override
     public T pop() {
-        return null;
+        SimpleListElement<T> listElement, previousElement;
+        listElement = (SimpleListElement<T>) this.listBegin;
+        previousElement = null;
+
+        if (listElement == null) { // leere Liste
+            return null;
+        } else if (this.elementCount == 1) {
+            T returnThis = listElement.getValue();
+            this.listBegin = null;
+            return returnThis;
+        } else {
+            while (listElement.hasNext()) {
+                previousElement = listElement;
+                listElement = (SimpleListElement<T>) listElement.getNext();
+            }
+            previousElement.setNext(null);
+            this.elementCount--;
+            return listElement.getValue();
+        }
     }
 
     /**
@@ -86,7 +139,18 @@ public class SimpleList<T> extends LinearList<T> {
      * @return
      */
     @Override
-    public T getElement(Integer index) {
+    public LinearListElement<T> getElement(Integer index) {
+        SimpleListElement<T> listElement;
+        Integer count = List.LIST_BEGIN;
+        listElement = (SimpleListElement<T>) this.listBegin;
+        while (listElement != null) {
+            if (index.equals(count)) {
+                return listElement;
+            } else {
+                listElement = (SimpleListElement<T>) listElement.getNext();
+                count++;
+            }
+        }
         return null;
     }
 
@@ -98,7 +162,8 @@ public class SimpleList<T> extends LinearList<T> {
      */
     @Override
     public T get(Integer index) {
-        return null;
+        SimpleListElement<T> returnThis = (SimpleListElement<T>) this.getElement(index);
+        return (returnThis == null ? null : returnThis.getValue());
     }
 
     /**
@@ -107,8 +172,57 @@ public class SimpleList<T> extends LinearList<T> {
      * @param index
      */
     @Override
-    public void delete(Integer index) {
+    public boolean delete(Integer index) {
+        Integer count = List.LIST_BEGIN;
 
+        if (index < List.LIST_BEGIN || index > this.elementCount) {
+            return false;
+        }
+        if (this.listBegin == null) { // Liste leer
+            return false;
+        }
+        if (index == List.LIST_BEGIN) {
+            this.listBegin = this.listBegin.getNext();
+            return true;
+        }
+
+        SimpleListElement<T> listElement, previousElement;
+        listElement = (SimpleListElement<T>) this.listBegin;
+        previousElement = null;
+        while (listElement != null) {
+            if (count.equals(index)) {
+                if (previousElement.getNext() != null) {
+                    previousElement.setNext(listElement.getNext());
+                    listElement = null;
+                    return true;
+                }
+            }
+            previousElement = listElement;
+            listElement = (SimpleListElement<T>) listElement.getNext();
+            count++;
+        }
+        return false;
+    }
+
+    /**
+     * Deletes only the first occurrence of the value in the list.
+     *
+     * @param value
+     */
+    @Override
+    public boolean delete(T value) {
+        return false;
+    }
+
+    /**
+     * Deletes all occurrences of the value in the list.
+     *
+     * @param value
+     * @return
+     */
+    @Override
+    public boolean deleteAll(T value) {
+        return false;
     }
 
     /**
@@ -145,17 +259,6 @@ public class SimpleList<T> extends LinearList<T> {
     }
 
     /**
-     * Deletes all Elements in the List that matches the parameter.
-     *
-     * @param value
-     * @return
-     */
-    @Override
-    public boolean deleteAll(T value) {
-        return false;
-    }
-
-    /**
      * Brings List into an String-readable representation.
      *
      * @return
@@ -171,7 +274,7 @@ public class SimpleList<T> extends LinearList<T> {
     @Override
     public void clear() {
         this.listBegin = null;
-        this.elementsCount = null;
+        this.elementCount = null;
         // Garbage Collection should kill all the elements
         // cause they never will be used again
     }

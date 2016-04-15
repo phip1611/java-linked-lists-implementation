@@ -17,7 +17,7 @@ public class BidirectionalList<T> extends LinearList<T> {
      * @param le
      */
     @Override
-    public void append(LinearListElement<T> le) {
+    public void append(LinearListElement<T> le) throws ListMaxSizeExceededException {
 
     }
 
@@ -27,7 +27,7 @@ public class BidirectionalList<T> extends LinearList<T> {
      * @param value
      */
     @Override
-    public void append(T value) {
+    public void append(T value) throws ListMaxSizeExceededException {
 
     }
 
@@ -38,8 +38,8 @@ public class BidirectionalList<T> extends LinearList<T> {
      * @param le
      */
     @Override
-    public void insert(Integer index, LinearListElement<T> le) {
-
+    public boolean insert(Integer index, LinearListElement<T> le) throws ListMaxSizeExceededException {
+        return false;
     }
 
     /**
@@ -49,8 +49,8 @@ public class BidirectionalList<T> extends LinearList<T> {
      * @param value
      */
     @Override
-    public void insert(Integer index, T value) {
-
+    public boolean insert(Integer index, T value) throws ListMaxSizeExceededException {
+        return false;
     }
 
     /**
@@ -72,7 +72,7 @@ public class BidirectionalList<T> extends LinearList<T> {
      * @return
      */
     @Override
-    public T getElement(Integer index) {
+    public LinearListElement<T> getElement(Integer index) {
         return null;
     }
 
@@ -93,8 +93,18 @@ public class BidirectionalList<T> extends LinearList<T> {
      * @param index
      */
     @Override
-    public void delete(Integer index) {
+    public boolean delete(Integer index) {
+        return false;
+    }
 
+    /**
+     * Deletes only the first occurrence of the value in the list.
+     *
+     * @param value
+     */
+    @Override
+    public boolean delete(T value) {
+        return false;
     }
 
     /**
@@ -131,7 +141,7 @@ public class BidirectionalList<T> extends LinearList<T> {
     }
 
     /**
-     * Deletes all Elements in the List that matches the parameter.
+     * Deletes all occurrences of the value in the list.
      *
      * @param value
      * @return
@@ -157,17 +167,5 @@ public class BidirectionalList<T> extends LinearList<T> {
     @Override
     public void clear() {
 
-    }
-
-    /**
-     * Returns {@code true} if the iteration has more elements.
-     * (In other words, returns {@code true} if {@link #next} would
-     * return an element rather than throwing an exception.)
-     *
-     * @return {@code true} if the iteration has more elements
-     */
-    @Override
-    public boolean hasNext() {
-        return false;
     }
 }

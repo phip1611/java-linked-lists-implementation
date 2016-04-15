@@ -14,14 +14,8 @@ public class Main {
         mySimpleList.append("es");
         mySimpleList.append("dir.");
         mySimpleList.printList();
-        for (String a : mySimpleList) {
-            System.out.println(a.toString());
-        }
-        mySimpleList.clear();
 
+        System.out.println(mySimpleList.delete(5));
         mySimpleList.printList();
-        for (String a : mySimpleList) {
-            System.out.println(a.toString());
-        }
 }
 }

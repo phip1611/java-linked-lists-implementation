@@ -17,37 +17,58 @@ public abstract class LinearList<T> extends List<T> implements Iterator<T>, Iter
     /**
      * You will need this to make Lists iterable and to find out at
      * which point of iteration you are right know.
+     * RESERVED FOR JAVA-ITERATORS/FOREACH_LOOPS.
+     *
      */
     protected Integer iterateProgressCount;
 
     /**
      * Always holds the element of the last iteration step to make for each loops possible.
+     * RESERVED FOR JAVA-ITERATORS/FOREACH_LOOPS.
      */
     protected LinearListElement<T> iterateProgress;
 
+
+    /**
+     * Reference to the very first Element of the list/the beginning.
+     * Overrides the Type from the upper clase List.
+     */
+    protected LinearListElement<T> listBegin;
+
+    /**
+     * Set-Up.
+     */
+    public LinearList() {
+        super();
+        this.iterateProgressCount = new Integer(0);
+    }
+
+
     /**
      * Appends data to the List.
      * @param le
      */
-    public abstract void append(LinearListElement<T> le);
+    public abstract void append(LinearListElement<T> le) throws ListMaxSizeExceededException;
 
     /**
      * Appends data to the List.
      * @param value
      */
-    public abstract void append(T value);
+    public abstract void append(T value) throws ListMaxSizeExceededException;
 
     /**
      * Inserts data to the List.
      * @param le
      */
-    public abstract void insert(Integer index, LinearListElement<T> le);
+    public abstract boolean insert(Integer index, LinearListElement<T> le) throws ListMaxSizeExceededException;
 
     /**
      * Inserts data to the List.
      * @param value
      */
-    public abstract void insert(Integer index, T value);
+    public abstract boolean insert(Integer index, T value) throws ListMaxSizeExceededException;
+
+
 
     /**
      * Returns the last Element and deletes it.
@@ -62,7 +83,7 @@ public abstract class LinearList<T> extends List<T> implements Iterator<T>, Iter
      * @param index
      * @return
      */
-    public abstract T getElement(Integer index);
+    public abstract LinearListElement<T> getElement(Integer index);
 
     /**
      * Returns content/value of a List at index.
@@ -75,13 +96,26 @@ public abstract class LinearList<T> extends List<T> implements Iterator<T>, Iter
      * Delets the List-Element at index.
      * @param index
      */
-    public abstract void delete(Integer index);
+    public abstract boolean delete(Integer index);
+
+    /**
+     * Deletes only the first occurrence of the value in the list.
+     * @param value
+     */
+    public abstract boolean delete(T value);
+
+    /**
+     * Deletes all occurrences of the value in the list.
+     * @param value
+     * @return
+     */
+    public abstract boolean deleteAll(T value);
 
     /**
      * Prints the List to the console.
      */
     public void printList() {
-        LinearListElement<T> current = (LinearListElement<T>) this.listBegin;
+        LinearListElement<T> current = this.listBegin;
         int i = 0;
         if (current == null) {
             System.out.println("The List is empty!");
@@ -95,14 +129,6 @@ public abstract class LinearList<T> extends List<T> implements Iterator<T>, Iter
     }
 
     /**
-     * Set-Up.
-     */
-    public LinearList() {
-        super();
-        this.iterateProgressCount = new Integer(0);
-    }
-
-    /**
      * Returns an iterator over elements of type {@code T}.
      *
      * @return an Iterator.
@@ -110,7 +136,7 @@ public abstract class LinearList<T> extends List<T> implements Iterator<T>, Iter
     @Override
     public Iterator<T> iterator() {
         this.iterateProgressCount = 0;
-        this.iterateProgress = (LinearListElement<T>) this.listBegin;
+        this.iterateProgress = this.listBegin;
         return this;
     }
 
@@ -143,10 +169,6 @@ public abstract class LinearList<T> extends List<T> implements Iterator<T>, Iter
     public boolean hasNext() {
         // Leere Liste
         // Die Referenz auf das Folge-Element wird übrigens in next() umgeschrieben.
-        if (this.iterateProgress == null) {
-            return false;
-        } else {
-            return true;
-        }
+        return this.iterateProgress != null;
     }
 }

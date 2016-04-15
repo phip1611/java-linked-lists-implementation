@@ -31,4 +31,12 @@ public abstract class LinearListElement<T> extends ListElement<T> {
     public LinearListElement<T> getNext() {
         return this.next;
     }
+
+    /**
+     * Determine whethere there is a next Element or not!
+     * @return
+     */
+    public boolean hasNext() {
+        return (this.next != null);
+    }
 }

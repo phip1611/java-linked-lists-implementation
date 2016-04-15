@@ -11,9 +11,22 @@ package de.phip1611.linked_lists;
 public abstract class List<T> implements Clearable {
 
     /**
+     * Max count of Elements a list can hold.
+     */
+    public static final Integer MAX_SIZE = Integer.MAX_VALUE;
+
+    /**
+     * Whenever you want to insert or delete an Element
+     * this is the base value for the index. For example causes
+     * insert(List.LIST_BEGIN, ...) on an empty List
+     * that the first ListElement will be created.
+     */
+    public static final Integer LIST_BEGIN = 1;
+
+    /**
      * The internal Counter for Elements in the List.
      */
-    protected Integer elementsCount;
+    protected Integer elementCount;
 
     /**
      * Reference to the very first Element of the list/the beginning.
@@ -24,8 +37,8 @@ public abstract class List<T> implements Clearable {
      * Get the Number of Elements in the List!
      * @return
      */
-    public int getElementsCount() {
-        return this.elementsCount;
+    public Integer getElementCount() {
+        return this.elementCount;
     }
 
     /**
@@ -67,6 +80,6 @@ public abstract class List<T> implements Clearable {
      */
     public List() {
         this.listBegin = null;
-        this.elementsCount = 0;
+        this.elementCount = 0;
     }
 }
