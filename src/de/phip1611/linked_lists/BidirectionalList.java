@@ -12,9 +12,7 @@ package de.phip1611.linked_lists;
 public class BidirectionalList<T> extends LinearList<T> {
 
     public BidirectionalList() {
-
         throw new UnsupportedOperationException("To be implemented.");
-
     }
 
     /**

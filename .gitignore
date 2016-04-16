@@ -2,7 +2,6 @@
 .idea
 *.iml
 out/
-src/de/phip1611/linked_lists/Main.java
 
 *.class
 

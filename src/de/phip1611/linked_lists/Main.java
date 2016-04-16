@@ -17,5 +17,6 @@ public class Main {
 
         System.out.println(mySimpleList.delete(5));
         mySimpleList.printList();
+
 }
 }
