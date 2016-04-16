@@ -53,7 +53,7 @@ public abstract class LinearList<T> extends List<T> implements Iterator<T>, Iter
      * Inserts data to the List.
      * @param value
      */
-    public abstract boolean insert(Integer index, T value) throws ListMaxSizeExceededException;
+    public abstract Boolean insert(Integer index, T value) throws ListMaxSizeExceededException;
 
 
 
@@ -70,33 +70,54 @@ public abstract class LinearList<T> extends List<T> implements Iterator<T>, Iter
      * @param index
      * @return
      */
-    public abstract T get(Integer index);
+    public abstract T getValue(Integer index);
 
     /**
-     * Delets the List-Element at index.
-     * @param index
-     */
-    public abstract boolean delete(Integer index);
-
-    /**
-     * Deletes only the first occurrence of the value in the list.
-     * @param value
-     */
-    public abstract boolean delete(T value);
-
-    /**
-     * Deletes all occurrences of the value in the list.
+     * Returns the index of the first
+     * occurrence of the value in the List.
+     * Returns 0 if the Element is not in the List.
      * @param value
      * @return
      */
-    public abstract boolean deleteAll(T value);
+    public abstract Integer getIndex(T value);
+
+    /**
+     * Returns an Array of index of all
+     * occurrences of the value in the List.
+     * @param value
+     * @return
+     */
+    public abstract Integer[] getIndexes(T value);
+
+    /**
+     * Delets the List-Element at index.
+     * Returns false if no element was deleted.
+     * @param index
+     */
+    public abstract Boolean deleteAt(Integer index);
+
+    /**
+     * Deletes only the first occurrence of the value in the list.
+     * Returns false if no element was deleted.
+     * @param value
+     */
+    public abstract Boolean delete(T value);
+
+    /**
+     * Deletes all occurrences of the value in the list.
+     * Returns false if no element was deleted.
+     * @param value
+     * @return
+     */
+    public abstract Boolean deleteAll(T value);
+
 
     /**
      * Prints the List to the console.
      */
     public void printList() {
         LinearListElement<T> current = this.listBegin;
-        int i = 0;
+        int i = List.LIST_BEGIN;
         if (current == null) {
             System.out.println("The List is empty!");
         } else {

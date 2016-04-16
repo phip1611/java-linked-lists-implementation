@@ -22,8 +22,8 @@ public class BidirectionalList<T> extends LinearList<T> {
      * @return
      */
     @Override
-    public boolean isInList(T value) {
-        return false;
+    public Boolean isInList(T value) {
+        return null;
     }
 
     /**
@@ -43,8 +43,8 @@ public class BidirectionalList<T> extends LinearList<T> {
      * @param value
      */
     @Override
-    public boolean insert(Integer index, T value) throws ListMaxSizeExceededException {
-        return false;
+    public Boolean insert(Integer index, T value) throws ListMaxSizeExceededException {
+        return null;
     }
 
     /**
@@ -66,39 +66,66 @@ public class BidirectionalList<T> extends LinearList<T> {
      * @return
      */
     @Override
-    public T get(Integer index) {
+    public T getValue(Integer index) {
         return null;
     }
 
     /**
-     * Delets the List-Element at index.
-     *
-     * @param index
-     */
-    @Override
-    public boolean delete(Integer index) {
-        return false;
-    }
-
-    /**
-     * Deletes only the first occurrence of the value in the list.
-     *
-     * @param value
-     */
-    @Override
-    public boolean delete(T value) {
-        return false;
-    }
-
-    /**
-     * Deletes all occurrences of the value in the list.
+     * Returns the index of the first
+     * occurrence of the value in the List.
      *
      * @param value
      * @return
      */
     @Override
-    public boolean deleteAll(T value) {
-        return false;
+    public Integer getIndex(T value) {
+        return null;
+    }
+
+    /**
+     * Returns an Array of index of all
+     * occurrences of the value in the List.
+     *
+     * @param value
+     * @return
+     */
+    @Override
+    public Integer[] getIndexes(T value) {
+        return new Integer[0];
+    }
+
+    /**
+     * Delets the List-Element at index.
+     * Returns false if no element was deleted.
+     *
+     * @param index
+     */
+    @Override
+    public Boolean deleteAt(Integer index) {
+        return null;
+    }
+
+    /**
+     * Deletes only the first occurrence of the value in the list.
+     * Returns false if no element was deleted.
+     *
+     * @param value
+     */
+    @Override
+    public Boolean delete(T value) {
+        return null;
+    }
+
+    /**
+     * Deletes all occurrences of the value in the list.
+     * Returns false if no element was deleted.
+     *
+     * @param value
+     * @return
+     */
+    @Override
+    public Boolean deleteAll(T value) {
+        return null;
     }
 
     /**
@@ -112,11 +139,4 @@ public class BidirectionalList<T> extends LinearList<T> {
     }
 
 
-    /**
-     * Clears a data structure / wipe's the fuck out of it.
-     */
-    @Override
-    public void clear() {
-
-    }
 }

@@ -66,6 +66,16 @@ public abstract class List<T> implements Clearable {
     }
 
     /**
+     * Clears a data structure / wipe's the fuck out of it.
+     */
+    public void clear() {
+        this.listBegin = null;
+        this.elementCount = null;
+        // Garbage Collection should kill all the elements
+        // cause they never will be used again
+    }
+
+    /**
      * If you want to set the mode you can use as parameters:
      * <li>List.SLACK_MODe</li>
      * <li>List.STRICT_MODE</li>
@@ -92,14 +102,15 @@ public abstract class List<T> implements Clearable {
      * @param value
      * @return
      */
-    public abstract boolean isInList(T value);
+    public abstract Boolean isInList(T value);
 
     /**
      * Deletes all Elements in the List that matches the parameter.
+     * Returns false if no element was deleted.
      * @param value
      * @return
      */
-    public abstract boolean deleteAll(T value);
+    public abstract Boolean deleteAll(T value);
 
     /**
      * Brings List into an String-readable representation.

@@ -45,7 +45,7 @@ public class SimpleList<T> extends LinearList<T> {
      * @param value
      */
     @Override
-    public boolean insert(Integer index, T value) throws ListMaxSizeExceededException {
+    public Boolean insert(Integer index, T value) throws ListMaxSizeExceededException {
         SimpleListElement<T> le = new SimpleListElement<T>(value);
         if (this.elementCount == List.MAX_SIZE) {
             throw new ListMaxSizeExceededException();
@@ -120,7 +120,7 @@ public class SimpleList<T> extends LinearList<T> {
      * @return
      */
     @Override
-    public T get(Integer index) {
+    public T getValue(Integer index) {
         if (index < List.LIST_BEGIN || index > this.elementCount) {
             return null;
         }
@@ -140,12 +140,44 @@ public class SimpleList<T> extends LinearList<T> {
     }
 
     /**
+     * Returns the index of the first
+     * occurrence of the value in the List.
+     * Returns 0 if the Element is not in the List.
+     * @param value
+     * @return
+     */
+    @Override
+    public Integer getIndex(T value) {
+        SimpleListElement<T> listElement = (SimpleListElement<T>) this.listBegin;
+        Integer count = List.LIST_BEGIN;
+        while (listElement != null) {
+            if (listElement.getValue().equals(value)) {
+                return count;
+            }
+            count++;
+            listElement = (SimpleListElement<T>) listElement.getNext();
+        }
+        return 0;
+    }
+
+    /**
+     * Returns an Array of index of all
+     * occurrences of the value in the List.
+     * @param value
+     * @return
+     */
+    @Override
+    public Integer[] getIndexes(T value) {
+        return new Integer[0];
+    }
+
+    /**
      * Delets the List-Element at index.
      *
      * @param index
      */
     @Override
-    public boolean delete(Integer index) {
+    public Boolean deleteAt(Integer index) {
         Integer count = List.LIST_BEGIN;
 
         if (index < List.LIST_BEGIN || index > this.elementCount) {
@@ -183,8 +215,11 @@ public class SimpleList<T> extends LinearList<T> {
      * @param value
      */
     @Override
-    public boolean delete(T value) {
-        return false;
+    public Boolean delete(T value) {
+        if (!isInList(value)) {
+            return false;
+        }
+        return deleteAt(getIndex(value));
     }
 
     /**
@@ -194,9 +229,19 @@ public class SimpleList<T> extends LinearList<T> {
      * @return
      */
     @Override
-    public boolean deleteAll(T value) {
-        return false;
+    public Boolean deleteAll(T value) {
+        if (!isInList(value)) {
+            return false;
+        }
+        else {
+            while(isInList(value)) {
+                deleteAt(getIndex(value));
+            }
+            return true;
+        }
     }
+
+
 
     /**
      * Determine if a specific value is already in the List (in an ListElement)!
@@ -205,7 +250,14 @@ public class SimpleList<T> extends LinearList<T> {
      * @return
      */
     @Override
-    public boolean isInList(T value) {
+    public Boolean isInList(T value) {
+        SimpleListElement<T> listElement = (SimpleListElement<T>) this.listBegin;
+        while (listElement != null) {
+            if (listElement.getValue().equals(value)) {
+                return true;
+            }
+            listElement = (SimpleListElement<T>) listElement.getNext();
+        }
         return false;
     }
 
@@ -217,17 +269,6 @@ public class SimpleList<T> extends LinearList<T> {
     @Override
     public String toString() {
         return null;
-    }
-
-    /**
-     * Clears a data structure / wipe's the fuck out of it.
-     */
-    @Override
-    public void clear() {
-        this.listBegin = null;
-        this.elementCount = null;
-        // Garbage Collection should kill all the elements
-        // cause they never will be used again
     }
 
 
