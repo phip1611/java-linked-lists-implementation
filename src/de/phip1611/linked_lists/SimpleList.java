@@ -187,7 +187,10 @@ public class SimpleList<T> extends LinearList<T> {
             return false;
         }
         if (index == List.LIST_BEGIN) {
+            // Referenz auf Listenbeginn wird gelöscht
+            // und durch Folgeelement ersetzt
             this.listBegin = this.listBegin.getNext();
+            this.elementCount--;
             return true;
         }
 
@@ -199,6 +202,7 @@ public class SimpleList<T> extends LinearList<T> {
                 if (previousElement.getNext() != null) {
                     previousElement.setNext(listElement.getNext());
                     listElement = null;
+                    this.elementCount--;
                     return true;
                 }
             }
@@ -268,7 +272,7 @@ public class SimpleList<T> extends LinearList<T> {
      */
     @Override
     public String toString() {
-        return null;
+        return "You just tried to print a SimpleList with "+this.elementCount+" Elements.";
     }
 
 
