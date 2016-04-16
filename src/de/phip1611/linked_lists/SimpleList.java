@@ -17,10 +17,11 @@ public class SimpleList<T> extends LinearList<T> {
     /**
      * Appends data to the List.
      *
-     * @param le
+     * @param value
      */
     @Override
-    public void append(LinearListElement<T> le) throws ListMaxSizeExceededException {
+    public void append(T value) throws ListMaxSizeExceededException {
+        SimpleListElement<T> le = new SimpleListElement<T>(value);
         // Liste ist noch leer
         if (this.elementCount == List.MAX_SIZE) {
             throw new ListMaxSizeExceededException();
@@ -38,23 +39,14 @@ public class SimpleList<T> extends LinearList<T> {
     }
 
     /**
-     * Appends data to the List.
+     * Inserts data to the List. Index starts at 1.
      *
+     * @param index
      * @param value
      */
     @Override
-    public void append(T value) throws ListMaxSizeExceededException {
-        this.append(new SimpleListElement<T>(value));
-    }
-
-    /**
-     * Inserts data to the List. Index starts at 1.
-     *
-     * @param index 0-
-     * @param le
-     */
-    @Override
-    public boolean insert(Integer index, LinearListElement<T> le) throws ListMaxSizeExceededException {
+    public boolean insert(Integer index, T value) throws ListMaxSizeExceededException {
+        SimpleListElement<T> le = new SimpleListElement<T>(value);
         if (this.elementCount == List.MAX_SIZE) {
             throw new ListMaxSizeExceededException();
         }
@@ -90,17 +82,6 @@ public class SimpleList<T> extends LinearList<T> {
         return false; // this point should never be reached but its a fallback
     }
 
-    /**
-     * Inserts data to the List. Index starts at 1.
-     *
-     * @param index
-     * @param value
-     */
-    @Override
-    public boolean insert(Integer index, T value) throws ListMaxSizeExceededException {
-        return this.insert(index, new SimpleListElement<T>(value));
-    }
-
 
     /**
      * Returns the last Elements value and deletes from the list it.
@@ -133,28 +114,6 @@ public class SimpleList<T> extends LinearList<T> {
     }
 
     /**
-     * Returns Element of a List at index.
-     *
-     * @param index
-     * @return
-     */
-    @Override
-    public LinearListElement<T> getElement(Integer index) {
-        SimpleListElement<T> listElement;
-        Integer count = List.LIST_BEGIN;
-        listElement = (SimpleListElement<T>) this.listBegin;
-        while (listElement != null) {
-            if (index.equals(count)) {
-                return listElement;
-            } else {
-                listElement = (SimpleListElement<T>) listElement.getNext();
-                count++;
-            }
-        }
-        return null;
-    }
-
-    /**
      * Returns content/value of a List at index.
      *
      * @param index
@@ -162,8 +121,22 @@ public class SimpleList<T> extends LinearList<T> {
      */
     @Override
     public T get(Integer index) {
-        SimpleListElement<T> returnThis = (SimpleListElement<T>) this.getElement(index);
-        return (returnThis == null ? null : returnThis.getValue());
+        if (index < List.LIST_BEGIN || index > this.elementCount) {
+            return null;
+        }
+        else {
+            LinearListElement<T> listElement = this.listBegin;
+            Integer count = List.LIST_BEGIN;
+            while (listElement != null) {
+                if (count.equals(index)) {
+                    return listElement.getValue();
+                } else {
+                    listElement = listElement.getNext();
+                    count++;
+                }
+            }
+            return null; // this should never be reached, just fallback
+        }
     }
 
     /**
@@ -226,17 +199,6 @@ public class SimpleList<T> extends LinearList<T> {
     }
 
     /**
-     * Determine if a specific ListElement is already in the List!
-     *
-     * @param le
-     * @return
-     */
-    @Override
-    public boolean isInList(ListElement le) {
-        return false;
-    }
-
-    /**
      * Determine if a specific value is already in the List (in an ListElement)!
      *
      * @param value
@@ -244,17 +206,6 @@ public class SimpleList<T> extends LinearList<T> {
      */
     @Override
     public boolean isInList(T value) {
-        return false;
-    }
-
-    /**
-     * Deletes all Elements in the List that matches the parameter.
-     *
-     * @param le
-     * @return
-     */
-    @Override
-    public boolean deleteAll(ListElement le) {
         return false;
     }
 

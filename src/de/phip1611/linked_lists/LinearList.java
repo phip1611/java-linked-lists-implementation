@@ -43,24 +43,11 @@ public abstract class LinearList<T> extends List<T> implements Iterator<T>, Iter
         this.iterateProgressCount = new Integer(0);
     }
 
-
-    /**
-     * Appends data to the List.
-     * @param le
-     */
-    public abstract void append(LinearListElement<T> le) throws ListMaxSizeExceededException;
-
     /**
      * Appends data to the List.
      * @param value
      */
     public abstract void append(T value) throws ListMaxSizeExceededException;
-
-    /**
-     * Inserts data to the List.
-     * @param le
-     */
-    public abstract boolean insert(Integer index, LinearListElement<T> le) throws ListMaxSizeExceededException;
 
     /**
      * Inserts data to the List.
@@ -77,13 +64,6 @@ public abstract class LinearList<T> extends List<T> implements Iterator<T>, Iter
      * @return
      */
     public abstract T pop();
-
-    /**
-     * Returns Element of a List at index.
-     * @param index
-     * @return
-     */
-    public abstract LinearListElement<T> getElement(Integer index);
 
     /**
      * Returns content/value of a List at index.

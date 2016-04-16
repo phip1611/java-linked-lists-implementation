@@ -16,13 +16,14 @@ public class BidirectionalList<T> extends LinearList<T> {
     }
 
     /**
-     * Appends data to the List.
+     * Determine if a specific value is already in the List (in an ListElement)!
      *
-     * @param le
+     * @param value
+     * @return
      */
     @Override
-    public void append(LinearListElement<T> le) throws ListMaxSizeExceededException {
-
+    public boolean isInList(T value) {
+        return false;
     }
 
     /**
@@ -33,17 +34,6 @@ public class BidirectionalList<T> extends LinearList<T> {
     @Override
     public void append(T value) throws ListMaxSizeExceededException {
 
-    }
-
-    /**
-     * Inserts data to the List.
-     *
-     * @param index
-     * @param le
-     */
-    @Override
-    public boolean insert(Integer index, LinearListElement<T> le) throws ListMaxSizeExceededException {
-        return false;
     }
 
     /**
@@ -66,17 +56,6 @@ public class BidirectionalList<T> extends LinearList<T> {
      */
     @Override
     public T pop() {
-        return null;
-    }
-
-    /**
-     * Returns Element of a List at index.
-     *
-     * @param index
-     * @return
-     */
-    @Override
-    public LinearListElement<T> getElement(Integer index) {
         return null;
     }
 
@@ -112,39 +91,6 @@ public class BidirectionalList<T> extends LinearList<T> {
     }
 
     /**
-     * Determine if a specific ListElement is already in the List!
-     *
-     * @param le
-     * @return
-     */
-    @Override
-    public boolean isInList(ListElement le) {
-        return false;
-    }
-
-    /**
-     * Determine if a specific value is already in the List (in an ListElement)!
-     *
-     * @param value
-     * @return
-     */
-    @Override
-    public boolean isInList(T value) {
-        return false;
-    }
-
-    /**
-     * Deletes all Elements in the List that matches the parameter.
-     *
-     * @param le
-     * @return
-     */
-    @Override
-    public boolean deleteAll(ListElement le) {
-        return false;
-    }
-
-    /**
      * Deletes all occurrences of the value in the list.
      *
      * @param value
@@ -164,6 +110,7 @@ public class BidirectionalList<T> extends LinearList<T> {
     public String toString() {
         return null;
     }
+
 
     /**
      * Clears a data structure / wipe's the fuck out of it.

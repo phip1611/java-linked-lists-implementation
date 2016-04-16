@@ -16,6 +16,21 @@ public abstract class List<T> implements Clearable {
     public static final Integer MAX_SIZE = Integer.MAX_VALUE;
 
     /**
+     * Set strictMode to this if it should not be allowed to add several items more than once.
+     */
+    public static final Boolean STRICT_MODE = true;
+
+    /**
+     * Set strictMode to this if it should not be allowed to add several items more than once.
+     */
+    public static final Boolean SLACK_MODE = false;
+
+    /**
+     * DEFAULT-Value for this.strictMode
+     */
+    public static final Boolean DEFAULT_MODE = List.SLACK_MODE;
+
+    /**
      * Whenever you want to insert or delete an Element
      * this is the base value for the index. For example causes
      * insert(List.LIST_BEGIN, ...) on an empty List
@@ -34,6 +49,37 @@ public abstract class List<T> implements Clearable {
     protected ListElement<T> listBegin;
 
     /**
+     * If strictMode is true then it's not allowed to insert
+     * Elements into the List that are already in! Otherwise
+     * you can add items multiple.
+     */
+    protected boolean strictMode;
+
+
+    /**
+     * Set-Up the list.
+     */
+    public List() {
+        this.listBegin = null;
+        this.elementCount = 0;
+        this.strictMode = List.DEFAULT_MODE;
+    }
+
+    /**
+     * If you want to set the mode you can use as parameters:
+     * <li>List.SLACK_MODe</li>
+     * <li>List.STRICT_MODE</li>
+     * @param mode
+     */
+    public void setMode(Boolean mode) {
+        this.strictMode = mode;
+    }
+
+    public Boolean getMode() {
+        return this.strictMode;
+    }
+
+    /**
      * Get the Number of Elements in the List!
      * @return
      */
@@ -42,25 +88,11 @@ public abstract class List<T> implements Clearable {
     }
 
     /**
-     * Determine if a specific ListElement is already in the List!
-     * @param le
-     * @return
-     */
-    public abstract boolean isInList(ListElement le);
-
-    /**
      * Determine if a specific value is already in the List (in an ListElement)!
      * @param value
      * @return
      */
     public abstract boolean isInList(T value);
-
-    /**
-     * Deletes all Elements in the List that matches the parameter.
-     * @param le
-     * @return
-     */
-    public abstract boolean deleteAll(ListElement le);
 
     /**
      * Deletes all Elements in the List that matches the parameter.
@@ -75,11 +107,4 @@ public abstract class List<T> implements Clearable {
      */
     public abstract String toString();
 
-    /**
-     * Set-Up the list.
-     */
-    public List() {
-        this.listBegin = null;
-        this.elementCount = 0;
-    }
 }
