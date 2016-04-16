@@ -2,7 +2,7 @@
 .idea
 *.iml
 out/
-
+*Main.java
 *.class
 
 # Mobile Tools for Java (J2ME)
