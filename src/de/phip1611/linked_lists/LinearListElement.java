@@ -3,7 +3,7 @@ package de.phip1611.linked_lists;
 /**
  * Abstract representation of a Linear List Element
  */
-public abstract class LinearListElement<T> extends ListElement<T> {
+public class LinearListElement<T> extends ListElement<T> {
 
     private LinearListElement<T> next;
 
