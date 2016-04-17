@@ -220,10 +220,32 @@ public class SimpleList<T> extends LinearList<T> {
      */
     @Override
     public Boolean delete(T value) {
-        if (!isInList(value)) {
-            return false;
+        Integer count = LIST_BEGIN;
+        if (this.listBegin.getValue().equals(value)) {
+            // Referenz auf Listenbeginn wird gelöscht
+            // und durch Folgeelement ersetzt
+            this.listBegin = this.listBegin.getNext();
+            this.elementCount--;
+            return true;
         }
-        return deleteAt(getIndex(value));
+
+        LinearListElement<T> listElement, previousElement;
+        listElement = this.listBegin;
+        previousElement = null;
+        while (listElement != null) {
+            if (listElement.getValue().equals(value)) {
+                if (listElement.hasNext()) {
+                    previousElement.setNext(listElement.getNext());
+                }
+                listElement = null;
+                this.elementCount--;
+                return true;
+            }
+            previousElement = listElement;
+            listElement = listElement.getNext();
+            count++;
+        }
+        return false;
     }
 
     /**
