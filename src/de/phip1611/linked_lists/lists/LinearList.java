@@ -1,4 +1,6 @@
-package de.phip1611.linked_lists;
+package de.phip1611.linked_lists.lists;
+
+import de.phip1611.linked_lists.elements.LinearListElement;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -134,7 +136,7 @@ public abstract class LinearList<T> extends List<T> implements Iterator<T>, Iter
     }
 
     /**
-     * Returns an iterator over elements of type {@code T}.
+     * Returns an iterator over lists of type {@code T}.
      *
      * @return an Iterator.
      */
@@ -149,12 +151,12 @@ public abstract class LinearList<T> extends List<T> implements Iterator<T>, Iter
      * Returns the next element in the iteration.
      *
      * @return the next element in the iteration
-     * @throws NoSuchElementException if the iteration has no more elements
+     * @throws NoSuchElementException if the iteration has no more lists
      */
     @Override
     public T next() {
         if (this.iterateProgress == null) {
-            throw new NoSuchElementException("No further elements in the list.");
+            throw new NoSuchElementException("No further lists in the list.");
         } else {
             T returnThis = this.iterateProgress.getValue();
             this.iterateProgressCount++;
@@ -164,11 +166,11 @@ public abstract class LinearList<T> extends List<T> implements Iterator<T>, Iter
     }
 
     /**
-     * Returns {@code true} if the iteration has more elements.
+     * Returns {@code true} if the iteration has more lists.
      * (In other words, returns {@code true} if {@link #next} would
      * return an element rather than throwing an exception.)
      *
-     * @return {@code true} if the iteration has more elements
+     * @return {@code true} if the iteration has more lists
      */
     @Override
     public boolean hasNext() {

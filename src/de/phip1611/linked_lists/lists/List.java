@@ -1,4 +1,6 @@
-package de.phip1611.linked_lists;
+package de.phip1611.linked_lists.lists;
+
+import de.phip1611.linked_lists.elements.ListElement;
 
 /**
  * This is part of my Lists-Implementation.
@@ -71,7 +73,7 @@ public abstract class List<T> implements Clearable {
     public void clear() {
         this.listBegin = null;
         this.elementCount = null;
-        // Garbage Collection should kill all the elements
+        // Garbage Collection should kill all the lists
         // cause they never will be used again
     }
 

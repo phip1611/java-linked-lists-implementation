@@ -1,4 +1,6 @@
-package de.phip1611.linked_lists;
+package de.phip1611.linked_lists.lists;
+
+import de.phip1611.linked_lists.elements.LinearListElement;
 
 /**
  * This is part of my Lists-Implementation.
@@ -31,7 +33,7 @@ public class SimpleList<T> extends LinearList<T> {
         } else {
             LinearListElement current = (LinearListElement) this.listBegin;
             while (current.getNext() != null) {
-                current = (LinearListElement) current.getNext();
+                current = current.getNext();
             }
             current.setNext(le);
         }
@@ -47,27 +49,27 @@ public class SimpleList<T> extends LinearList<T> {
     @Override
     public Boolean insert(Integer index, T value) throws ListMaxSizeExceededException {
         LinearListElement<T> le = new LinearListElement<>(value);
-        if (this.elementCount == List.MAX_SIZE) {
+        if (this.elementCount == MAX_SIZE) {
             throw new ListMaxSizeExceededException();
         }
 
-        int count = List.LIST_BEGIN;
+        int count = LIST_BEGIN;
 
-        if (index < List.LIST_BEGIN || index > this.elementCount) {
+        if (index < LIST_BEGIN || index > this.elementCount) {
             return false;
         }
         if (this.listBegin == null && index == 1) {
             this.listBegin = le;
             return true;
         }
-        if (index == List.LIST_BEGIN) {
+        if (index == LIST_BEGIN) {
             le.setNext(this.listBegin);
             this.listBegin = le;
             return true;
         } else {
             LinearListElement<T> previousElement, listElement;
             previousElement = null;
-            listElement = (LinearListElement<T>) this.listBegin;
+            listElement = this.listBegin;
             while (listElement != null) {
                 if (index.equals(count)) {
                     previousElement.setNext(le);
@@ -75,7 +77,7 @@ public class SimpleList<T> extends LinearList<T> {
                     return true;
                 }
                 previousElement = listElement;
-                listElement = (LinearListElement<T>) listElement.getNext();
+                listElement = listElement.getNext();
                 count++;
             }
         }
@@ -93,7 +95,7 @@ public class SimpleList<T> extends LinearList<T> {
     @Override
     public T pop() {
         LinearListElement<T> listElement, previousElement;
-        listElement = (LinearListElement<T>) this.listBegin;
+        listElement = this.listBegin;
         previousElement = null;
 
         if (listElement == null) { // leere Liste
@@ -105,7 +107,7 @@ public class SimpleList<T> extends LinearList<T> {
         } else {
             while (listElement.hasNext()) {
                 previousElement = listElement;
-                listElement = (LinearListElement<T>) listElement.getNext();
+                listElement = listElement.getNext();
             }
             previousElement.setNext(null);
             this.elementCount--;
@@ -121,12 +123,12 @@ public class SimpleList<T> extends LinearList<T> {
      */
     @Override
     public T getValue(Integer index) {
-        if (index < List.LIST_BEGIN || index > this.elementCount) {
+        if (index < LIST_BEGIN || index > this.elementCount) {
             return null;
         }
         else {
             LinearListElement<T> listElement = this.listBegin;
-            Integer count = List.LIST_BEGIN;
+            Integer count = LIST_BEGIN;
             while (listElement != null) {
                 if (count.equals(index)) {
                     return listElement.getValue();
@@ -148,14 +150,14 @@ public class SimpleList<T> extends LinearList<T> {
      */
     @Override
     public Integer getIndex(T value) {
-        LinearListElement<T> listElement = (LinearListElement<T>) this.listBegin;
-        Integer count = List.LIST_BEGIN;
+        LinearListElement<T> listElement = this.listBegin;
+        Integer count = LIST_BEGIN;
         while (listElement != null) {
             if (listElement.getValue().equals(value)) {
                 return count;
             }
             count++;
-            listElement = (LinearListElement<T>) listElement.getNext();
+            listElement = listElement.getNext();
         }
         return 0;
     }
@@ -178,15 +180,15 @@ public class SimpleList<T> extends LinearList<T> {
      */
     @Override
     public Boolean deleteAt(Integer index) {
-        Integer count = List.LIST_BEGIN;
+        Integer count = LIST_BEGIN;
 
-        if (index < List.LIST_BEGIN || index > this.elementCount) {
+        if (index < LIST_BEGIN || index > this.elementCount) {
             return false;
         }
         if (this.listBegin == null) { // Liste leer
             return false;
         }
-        if (index == List.LIST_BEGIN) {
+        if (index == LIST_BEGIN) {
             // Referenz auf Listenbeginn wird gelöscht
             // und durch Folgeelement ersetzt
             this.listBegin = this.listBegin.getNext();
@@ -195,7 +197,7 @@ public class SimpleList<T> extends LinearList<T> {
         }
 
         LinearListElement<T> listElement, previousElement;
-        listElement = (LinearListElement<T>) this.listBegin;
+        listElement = this.listBegin;
         previousElement = null;
         while (listElement != null) {
             if (count.equals(index)) {
@@ -207,7 +209,7 @@ public class SimpleList<T> extends LinearList<T> {
                 }
             }
             previousElement = listElement;
-            listElement = (LinearListElement<T>) listElement.getNext();
+            listElement = listElement.getNext();
             count++;
         }
         return false;
@@ -255,12 +257,12 @@ public class SimpleList<T> extends LinearList<T> {
      */
     @Override
     public Boolean isInList(T value) {
-        LinearListElement<T> listElement = (LinearListElement<T>) this.listBegin;
+        LinearListElement<T> listElement = this.listBegin;
         while (listElement != null) {
             if (listElement.getValue().equals(value)) {
                 return true;
             }
-            listElement = (LinearListElement<T>) listElement.getNext();
+            listElement = listElement.getNext();
         }
         return false;
     }

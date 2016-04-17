@@ -1,4 +1,4 @@
-package de.phip1611.linked_lists;
+package de.phip1611.linked_lists.elements;
 
 /**
  * Abstract representation of a List Element.
