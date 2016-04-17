@@ -1,6 +1,4 @@
-package de.phip1611.linked_lists.lists;
-
-import de.phip1611.linked_lists.elements.ListElement;
+package de.phip1611.linked_lists;
 
 /**
  * This is part of my Lists-Implementation.

@@ -1,4 +1,4 @@
-package de.phip1611.linked_lists.lists;
+package de.phip1611.linked_lists;
 
 /**
  * This is part of my Lists-Implementation.

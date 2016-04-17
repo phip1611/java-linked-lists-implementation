@@ -1,4 +1,4 @@
-package de.phip1611.linked_lists.lists;
+package de.phip1611.linked_lists;
 
 /**
  * Makes sure a data-structure can be cleared (for example a list).

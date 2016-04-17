@@ -1,4 +1,4 @@
-package de.phip1611.linked_lists.elements;
+package de.phip1611.linked_lists;
 
 /**
  * Created by phip1611 on 15.04.16.

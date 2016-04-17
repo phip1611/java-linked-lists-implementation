@@ -1,6 +1,4 @@
-package de.phip1611.linked_lists.lists;
-
-import de.phip1611.linked_lists.elements.LinearListElement;
+package de.phip1611.linked_lists;
 
 /**
  * This is part of my Lists-Implementation.
@@ -25,7 +23,7 @@ public class SimpleList<T> extends LinearList<T> {
     public void append(T value) throws ListMaxSizeExceededException {
         LinearListElement<T> le = new LinearListElement<>(value);
         // Liste ist noch leer
-        if (this.elementCount == List.MAX_SIZE) {
+        if (this.elementCount == MAX_SIZE) {
             throw new ListMaxSizeExceededException();
         }
         if (this.listBegin == null) {

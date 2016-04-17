@@ -1,6 +1,4 @@
-package de.phip1611.linked_lists.lists;
-
-import de.phip1611.linked_lists.elements.LinearListElement;
+package de.phip1611.linked_lists;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

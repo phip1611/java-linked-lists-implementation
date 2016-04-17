@@ -1,4 +1,4 @@
-package de.phip1611.linked_lists.elements;
+package de.phip1611.linked_lists;
 
 /**
  * Abstract representation of a Linear List Element
