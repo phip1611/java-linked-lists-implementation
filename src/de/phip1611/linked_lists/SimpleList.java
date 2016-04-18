@@ -101,6 +101,7 @@ public class SimpleList<T> extends LinearList<T> {
         } else if (this.elementCount == 1) {
             T returnThis = listElement.getValue();
             this.listBegin = null;
+            this.elementCount--;
             return returnThis;
         } else {
             while (listElement.hasNext()) {
@@ -240,10 +241,11 @@ public class SimpleList<T> extends LinearList<T> {
                 listElement = null;
                 this.elementCount--;
                 return true;
+            } else {
+                previousElement = listElement;
+                listElement = listElement.getNext();
+                count++;
             }
-            previousElement = listElement;
-            listElement = listElement.getNext();
-            count++;
         }
         return false;
     }
@@ -256,15 +258,53 @@ public class SimpleList<T> extends LinearList<T> {
      */
     @Override
     public Boolean deleteAll(T value) {
-        if (!isInList(value)) {
+        Integer count = LIST_BEGIN;
+        Boolean deletedAny = false;
+        if (this.listBegin == null) {
+            // leere Lists
             return false;
-        }
-        else {
-            while(isInList(value)) {
-                deleteAt(getIndex(value));
+        } else if (this.elementCount == 1) {
+            // ein-elementige Liste
+            if (this.listBegin.getValue().equals(value)) {
+                this.listBegin = null;
+                this.elementCount--;
+                return true;
             }
-            return true;
         }
+
+        LinearListElement<T> listElement, previousElement;
+        listElement = this.listBegin;
+        previousElement = null;
+        while (listElement != null) {
+            if (listElement.getValue().equals(value)) {
+                // aktuelels Listenelement hat den gewünschten Inhalt
+                if (this.listBegin == listElement) {
+                    this.listBegin = listElement = this.listBegin.getNext();
+                    this.elementCount--;
+                    deletedAny = true;
+                    continue;
+                }
+                else if (!listElement.hasNext()) {
+                    // ListenENDE
+                    previousElement.setNext(null);
+                    listElement = null;
+                    this.elementCount--;
+                    return true;
+                }
+                // normales weiter iterieren
+                if ((previousElement != null && listElement.hasNext())) {
+                        previousElement.setNext(listElement.getNext());
+                }
+                listElement = listElement.getNext();
+                this.elementCount--;
+                deletedAny = true;
+            } else {
+                previousElement = listElement;
+                listElement = listElement.getNext();
+                count++;
+            }
+        }
+        return deletedAny;
     }
 
 
