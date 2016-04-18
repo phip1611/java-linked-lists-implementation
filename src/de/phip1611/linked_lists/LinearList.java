@@ -121,8 +121,11 @@ public abstract class LinearList<T> extends List<T> implements Iterator<T>, Iter
         if (current == null && elementCount == 0) {
             System.out.println("The List is empty!");
         }
-        else if (current == null && elementCount != 0 || current != null && elementCount == 0) {
-            System.err.println("printList() DEBUG: Reference to first Element is null but elementCount != null. Maybe a bug in the List-Class?");
+        else if (current == null && elementCount != 0) {
+            System.err.printf("printList() DEBUG: Reference to first Element is null but elementCount == %d != 0. Maybe a bug in the List-Class?\n", this.elementCount);
+        }
+        else if (current != null && elementCount == 0) {
+            System.err.printf("printList() DEBUG: Reference to first Element is NOT null but elementCount == 0. Maybe a bug in the List-Class?\n", this.elementCount);
         }
         else {
             while (current != null) {
