@@ -6,7 +6,11 @@ package de.phip1611.linked_lists;
  * @author Philipp Schuster | https://phip1611.de | @phip1611
  *
  *
- * A implementation of a SimpleList that is awesome!
+ * A implementation of a simple linear list!
+ * This implementation is slow due to it only saves
+ * the list begin and it's just one-directional/mono-directional.
+ * You should just learn from it. Rather use BidirectionalList!
+ *
  */
 public class SimpleList<T> extends LinearList<T> {
 

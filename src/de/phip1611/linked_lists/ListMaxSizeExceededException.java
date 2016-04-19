@@ -5,4 +5,11 @@ package de.phip1611.linked_lists;
  *
  * @author Philipp Schuster | https://phip1611.de | @phip1611
  */
-public class ListMaxSizeExceededException extends IndexOutOfBoundsException {}
+public class ListMaxSizeExceededException extends IndexOutOfBoundsException {
+    public ListMaxSizeExceededException(String message) {
+        super(message);
+    }
+    public ListMaxSizeExceededException() {
+        super("");
+    }
+}
