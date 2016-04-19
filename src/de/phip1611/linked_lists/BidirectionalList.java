@@ -172,6 +172,23 @@ public class BidirectionalList<T> extends LinearList<T> {
      */
     @Override
     public T getValue(Integer index) {
+        if (index < LIST_BEGIN || index > this.elementCount) {
+            String exception;
+            exception =  String.format("Index \"%d\" liegt außerhalb der Grenzen [%d,%d]\n",
+                    index, LIST_BEGIN, this.elementCount);
+            System.err.println(exception);
+            throw new ListMaxSizeExceededException(exception);
+        }
+        // Vorwärts iterieren
+        int count = List.LIST_BEGIN;
+        BidirectionalListElement currentListElement = this.listBegin;
+        while (currentListElement.hasNext()) {
+            if (count == index) {
+                return (T) currentListElement.getValue();
+            }
+            currentListElement = currentListElement.getNext();
+            count++;
+        }
         return null;
     }
 
@@ -184,6 +201,16 @@ public class BidirectionalList<T> extends LinearList<T> {
      */
     @Override
     public Integer getIndex(T value) {
+        // Vorwärts iterieren
+        int count = List.LIST_BEGIN;
+        BidirectionalListElement currentListElement = this.listBegin;
+        while (currentListElement.hasNext()) {
+            if (currentListElement.getValue().equals(value)) {
+                return count;
+            }
+            currentListElement = currentListElement.getNext();
+            count++;
+        }
         return null;
     }
 
@@ -207,7 +234,17 @@ public class BidirectionalList<T> extends LinearList<T> {
      */
     @Override
     public Boolean deleteAt(Integer index) {
-        return null;
+        if (index < LIST_BEGIN || index > this.elementCount) {
+            String exception;
+            exception =  String.format("Index \"%d\" liegt außerhalb der Grenzen [%d,%d]\n",
+                    index, LIST_BEGIN, this.elementCount);
+            System.err.println(exception);
+            throw new ListMaxSizeExceededException(exception);
+        }
+
+        throw new UnsupportedOperationException("To be implemented");
+
+        return false;
     }
 
     /**
