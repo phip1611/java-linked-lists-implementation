@@ -70,7 +70,7 @@ public abstract class List<T> implements Clearable {
      */
     public void clear() {
         this.listBegin = null;
-        this.elementCount = null;
+        this.elementCount = 0;
         // Garbage Collection should kill all the lists
         // cause they never will be used again
     }

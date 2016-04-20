@@ -416,6 +416,18 @@ public class BidirectionalList<T> extends LinearList<T> {
     }
 
     /**
+     * Clears a data structure / wipe's the fuck out of it.
+     */
+    @Override
+    public void clear() {
+        this.listBegin = null;
+        this.listEnd = null;
+        this.elementCount = 0;
+        // Garbage Collection should kill all the lists
+        // cause they never will be used again
+    }
+
+    /**
      * Prints the List BACKWARDS to the console.
      * @see this.printList()
      */
