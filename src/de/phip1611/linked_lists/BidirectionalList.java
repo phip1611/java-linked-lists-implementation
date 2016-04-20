@@ -254,10 +254,59 @@ public class BidirectionalList<T> extends LinearList<T> {
             System.err.println(exception);
             throw new ListMaxSizeExceededException(exception);
         }
-
-        throw new UnsupportedOperationException("To be implemented");
-
-        //return false;
+        else if (index == LIST_BEGIN) {
+            this.listBegin = listBegin.getNext();
+            this.listBegin.setPrevious(null);
+            this.elementCount--;
+            return true;
+        }
+        else if (index == elementCount) { // Listenende
+            this.listEnd = this.listEnd.getPrevious();
+            this.listEnd.setNext(null);
+            this.elementCount--;
+            return true;
+        }
+        else {
+            int iterateCounter;
+            BidirectionalListElement currentListElement;
+            // Vorwärts iterieren
+            if ((elementCount-index+1) > elementCount/2) {
+                iterateCounter = List.LIST_BEGIN;
+                currentListElement = this.listBegin;
+                while (currentListElement.hasNext()) {
+                    if (iterateCounter == index) {
+                        BidirectionalListElement beforeElement, nextElement;
+                        beforeElement = currentListElement.getPrevious();
+                        nextElement = currentListElement.getNext();
+                        beforeElement.setNext(nextElement);
+                        nextElement.setPrevious(beforeElement);
+                        this.elementCount--;
+                        return true;
+                    }
+                    currentListElement = currentListElement.getNext();
+                    iterateCounter++;
+                }
+            }
+            // Rückwärts iterieren
+            else {
+                iterateCounter = this.elementCount;
+                currentListElement = this.listEnd;
+                while (currentListElement.hasPrevious()) {
+                    if (iterateCounter == index) {
+                        BidirectionalListElement beforeElement, nextElement;
+                        beforeElement = currentListElement.getPrevious();
+                        nextElement = currentListElement.getNext();
+                        beforeElement.setNext(nextElement);
+                        nextElement.setPrevious(beforeElement);
+                        this.elementCount--;
+                        return true;
+                    }
+                    currentListElement = currentListElement.getPrevious();
+                    iterateCounter--;
+                }
+            }
+        }
+        return false;
     }
 
     /**
