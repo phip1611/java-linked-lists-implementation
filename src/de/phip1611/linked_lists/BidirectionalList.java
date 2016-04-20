@@ -384,7 +384,7 @@ public class BidirectionalList<T> extends LinearList<T> {
      */
     @Override
     public String toString() {
-        return null;
+        return "This BidirectionalList contains "+elementCount+" elements.";
     }
 
     /**
