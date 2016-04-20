@@ -1,5 +1,7 @@
 package de.phip1611.linked_lists;
 
+import java.util.ArrayList;
+
 /**
  * This is part of my Lists-Implementation.
  *
@@ -223,7 +225,18 @@ public class BidirectionalList<T> extends LinearList<T> {
      */
     @Override
     public Integer[] getIndexes(T value) {
-        return new Integer[0];
+        // Vorwärts iterieren
+        int count = List.LIST_BEGIN;
+        ArrayList<Integer> indexes = new ArrayList<>();
+        BidirectionalListElement currentListElement = this.listBegin;
+        while (currentListElement != null) {
+            if (currentListElement.getValue().equals(value)) {
+                indexes.add(count);
+            }
+            currentListElement = currentListElement.getNext();
+            count++;
+        }
+        return indexes.toArray(new Integer[indexes.size()]);
     }
 
     /**
@@ -244,7 +257,7 @@ public class BidirectionalList<T> extends LinearList<T> {
 
         throw new UnsupportedOperationException("To be implemented");
 
-        return false;
+        //return false;
     }
 
     /**
