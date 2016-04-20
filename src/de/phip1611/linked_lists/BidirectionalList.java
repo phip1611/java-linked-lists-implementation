@@ -103,13 +103,13 @@ public class BidirectionalList<T> extends LinearList<T> {
                 currentListElement = this.listBegin;
                 while (currentListElement.hasNext()) {
                     if (iterateCounter == index) {
-                        BidirectionalListElement beforeElement, insertElement;
+                        BidirectionalListElement previousElement, insertElement;
                         insertElement = new BidirectionalListElement(value);
-                        beforeElement = currentListElement.getPrevious();
-                        beforeElement.setNext(insertElement);
+                        previousElement = currentListElement.getPrevious();
+                        previousElement.setNext(insertElement);
                         insertElement.setNext(currentListElement);
                         currentListElement.setPrevious(insertElement);
-                        insertElement.setPrevious(beforeElement);
+                        insertElement.setPrevious(previousElement);
                         break;
                     }
                     currentListElement = currentListElement.getNext();
@@ -122,13 +122,13 @@ public class BidirectionalList<T> extends LinearList<T> {
                 currentListElement = this.listEnd;
                 while (currentListElement.hasPrevious()) {
                     if (iterateCounter == index) {
-                        BidirectionalListElement beforeElement, insertElement;
+                        BidirectionalListElement previousElement, insertElement;
                         insertElement = new BidirectionalListElement(value);
-                        beforeElement = currentListElement.getPrevious();
-                        beforeElement.setNext(insertElement);
+                        previousElement = currentListElement.getPrevious();
+                        previousElement.setNext(insertElement);
                         insertElement.setNext(currentListElement);
                         currentListElement.setPrevious(insertElement);
-                        insertElement.setPrevious(beforeElement);
+                        insertElement.setPrevious(previousElement);
                         break;
                     }
                     currentListElement = currentListElement.getPrevious();
@@ -275,11 +275,11 @@ public class BidirectionalList<T> extends LinearList<T> {
                 currentListElement = this.listBegin;
                 while (currentListElement.hasNext()) {
                     if (iterateCounter == index) {
-                        BidirectionalListElement beforeElement, nextElement;
-                        beforeElement = currentListElement.getPrevious();
+                        BidirectionalListElement previousElement, nextElement;
+                        previousElement = currentListElement.getPrevious();
                         nextElement = currentListElement.getNext();
-                        beforeElement.setNext(nextElement);
-                        nextElement.setPrevious(beforeElement);
+                        previousElement.setNext(nextElement);
+                        nextElement.setPrevious(previousElement);
                         this.elementCount--;
                         return true;
                     }
@@ -293,11 +293,11 @@ public class BidirectionalList<T> extends LinearList<T> {
                 currentListElement = this.listEnd;
                 while (currentListElement.hasPrevious()) {
                     if (iterateCounter == index) {
-                        BidirectionalListElement beforeElement, nextElement;
-                        beforeElement = currentListElement.getPrevious();
+                        BidirectionalListElement previousElement, nextElement;
+                        previousElement = currentListElement.getPrevious();
                         nextElement = currentListElement.getNext();
-                        beforeElement.setNext(nextElement);
-                        nextElement.setPrevious(beforeElement);
+                        previousElement.setNext(nextElement);
+                        nextElement.setPrevious(previousElement);
                         this.elementCount--;
                         return true;
                     }
@@ -317,7 +317,23 @@ public class BidirectionalList<T> extends LinearList<T> {
      */
     @Override
     public Boolean delete(T value) {
-        return null;
+        // Vorwärts iterieren
+        int count = List.LIST_BEGIN;
+        BidirectionalListElement currentListElement = this.listBegin;
+        while (currentListElement != null) {
+            if (currentListElement.getValue().equals(value)) {
+                BidirectionalListElement previousElement, nextElement;
+                previousElement = currentListElement.getPrevious();
+                nextElement = currentListElement.getNext();
+                previousElement.setNext(nextElement);
+                nextElement.setPrevious(previousElement);
+                elementCount--;
+                return true;
+            }
+            currentListElement = currentListElement.getNext();
+            count++;
+        }
+        return false;
     }
 
     /**
@@ -329,7 +345,36 @@ public class BidirectionalList<T> extends LinearList<T> {
      */
     @Override
     public Boolean deleteAll(T value) {
-        return null;
+        // Vorwärts iterieren
+        boolean deletedAny = false;
+        BidirectionalListElement currentListElement = this.listBegin;
+        while (currentListElement != null) {
+            if (currentListElement.getValue().equals(value)) {
+                if (elementCount == LIST_BEGIN) {
+                    this.listBegin = null;
+                    this.listEnd = null;
+                }
+                else if (currentListElement == listBegin) {
+                    this.listBegin = this.listBegin.getNext();
+                    this.listBegin.setPrevious(null);
+                }
+                else if (currentListElement == listEnd) {
+                    this.listEnd = this.listEnd.getPrevious();
+                    this.listEnd.setNext(null);
+                }
+                else {
+                    BidirectionalListElement previousElement, nextElement;
+                    previousElement = currentListElement.getPrevious();
+                    nextElement = currentListElement.getNext();
+                    previousElement.setNext(nextElement);
+                    nextElement.setPrevious(previousElement);
+                }
+                deletedAny = true;
+                elementCount--;
+            }
+            currentListElement = currentListElement.getNext();
+        }
+        return deletedAny;
     }
 
     /**
