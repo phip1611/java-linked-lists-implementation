@@ -47,14 +47,37 @@ public abstract class LinearList<T> extends List<T> implements Iterator<T>, Iter
      * Appends data to the List.
      * @param value
      */
-    public abstract void append(T value) throws ListMaxSizeExceededException;
+    public abstract void append(T value) throws ListSizeExceededException;
 
     /**
      * Inserts data to the List.
      * @param value
      */
-    public abstract Boolean insert(Integer index, T value) throws ListMaxSizeExceededException;
+    public abstract Boolean insert(Integer index, T value) throws ListSizeExceededException;
 
+
+    /**
+     * Determines whether the index is in
+     * the lists valid range.
+     */
+    public Boolean indexInRange(Integer index) {
+        boolean indexInRange = (LIST_BEGIN <= index && index <= elementCount);
+        if (!indexInRange) {
+            StringBuilder exceptionMessageSb = new StringBuilder();
+            String exceptionMessage;
+            exceptionMessageSb.append("Index \"");
+            exceptionMessageSb.append(index);
+            exceptionMessageSb.append("\" liegt außerhalb der Listen-Grenzen [");
+            exceptionMessageSb.append(LIST_BEGIN);
+            exceptionMessageSb.append(",");
+            exceptionMessageSb.append((this.elementCount==0?"-":this.elementCount));
+            exceptionMessageSb.append("]");
+            exceptionMessage = exceptionMessageSb.toString();
+            System.err.println(exceptionMessage);
+            throw new ListSizeExceededException(exceptionMessage);
+        }
+        return true;
+    }
 
 
     /**
@@ -111,6 +134,22 @@ public abstract class LinearList<T> extends List<T> implements Iterator<T>, Iter
      */
     public abstract Boolean deleteAll(T value);
 
+    /**
+     * Determine if a specific value is already in the List (in an ListElement)!
+     *
+     * @param value
+     * @return
+     */
+    public Boolean isInList(T value) {
+        LinearListElement<T> listElement = this.listBegin;
+        while (listElement != null) {
+            if (listElement.getValue().equals(value)) {
+                return true;
+            }
+            listElement = listElement.getNext();
+        }
+        return false;
+    }
 
     /**
      * Prints the List to the console.

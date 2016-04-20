@@ -29,31 +29,21 @@ public class BidirectionalList<T> extends LinearList<T> {
     }
 
     /**
-     * Determine if a specific value is already in the List (in an ListElement)!
-     *
-     * @param value
-     * @return
-     */
-    @Override
-    public Boolean isInList(T value) {
-        // Vorwärts iterieren
-        BidirectionalListElement currentListElement = this.listBegin;
-        while (currentListElement.hasNext()) {
-            if (currentListElement.getValue().equals(value)) {
-               return true;
-            }
-            currentListElement = currentListElement.getNext();
-        }
-        return false;
-    }
-
-    /**
      * Appends data to the List.
      *
      * @param value
      */
     @Override
-    public void append(T value) throws ListMaxSizeExceededException {
+    public void append(T value) throws ListSizeExceededException {
+        // Elemente dürfen nur einmalig hinzugefügt werden
+        if (this.strictMode) {
+            if (isInList(value)) {
+                System.err.println(value + " ist bereits in der Liste!");
+                throw new ElementAlreadyInListException(
+                        "Element "+value.toString()+" ist bereits in der Liste. Strict Mode aktiv!");
+            }
+        }
+
         if (this.listBegin == null) {
             // die Liste ist leer
             this.listBegin = new BidirectionalListElement<>(value);
@@ -80,15 +70,29 @@ public class BidirectionalList<T> extends LinearList<T> {
      * @param value
      */
     @Override
-    public Boolean insert(Integer index, T value) throws ListMaxSizeExceededException {
-        if (index < LIST_BEGIN || index > this.elementCount) {
-            String exception;
-            exception =  String.format("Index \"%d\" liegt außerhalb der Grenzen [%d,%d]\n",
-                    index, LIST_BEGIN, this.elementCount);
-            System.err.println(exception);
-            throw new ListMaxSizeExceededException(exception);
+    public Boolean insert(Integer index, T value) throws ListSizeExceededException {
+        // Elemente dürfen nur einmalig hinzugefügt werden
+        if (this.strictMode) {
+            if (isInList(value)) {
+                System.err.println(value + "ist bereits in der Liste!");
+                throw new ElementAlreadyInListException(
+                        "Element "+value.toString()+"ist bereits in der Liste. Strict Mode aktiv!");
+            }
         }
-        else if (index == LIST_BEGIN) {
+
+
+        indexInRange(index); // if not throws a ListSizeExceededException
+
+        // Elemente dürfen nur einmalig hinzugefügt werden
+        if (this.strictMode) {
+            if (isInList(value)) {
+                System.err.println(value + "ist bereits in der Liste!");
+                throw new ElementAlreadyInListException(
+                        "Element "+value.toString()+"ist bereits in der Liste. Strict Mode aktiv!");
+            }
+        }
+
+        if (index == LIST_BEGIN) {
             BidirectionalListElement insertElement = new BidirectionalListElement(value);
             insertElement.setNext(this.listBegin);
             this.listBegin.setPrevious(insertElement);
@@ -169,22 +173,18 @@ public class BidirectionalList<T> extends LinearList<T> {
     /**
      * Returns content/value of a List at index.
      *
+     * @throws ListSizeExceededException
      * @param index
      * @return
      */
     @Override
-    public T getValue(Integer index) {
-        if (index < LIST_BEGIN || index > this.elementCount) {
-            String exception;
-            exception =  String.format("Index \"%d\" liegt außerhalb der Grenzen [%d,%d]\n",
-                    index, LIST_BEGIN, this.elementCount);
-            System.err.println(exception);
-            throw new ListMaxSizeExceededException(exception);
-        }
+    public T getValue(Integer index) throws ListSizeExceededException {
+        indexInRange(index); // if not it throws a Exception
+
         // Vorwärts iterieren
         int count = List.LIST_BEGIN;
         BidirectionalListElement currentListElement = this.listBegin;
-        while (currentListElement.hasNext()) {
+        while (currentListElement != null) {
             if (count == index) {
                 return (T) currentListElement.getValue();
             }
@@ -206,7 +206,7 @@ public class BidirectionalList<T> extends LinearList<T> {
         // Vorwärts iterieren
         int count = List.LIST_BEGIN;
         BidirectionalListElement currentListElement = this.listBegin;
-        while (currentListElement.hasNext()) {
+        while (currentListElement != null) {
             if (currentListElement.getValue().equals(value)) {
                 return count;
             }
@@ -214,6 +214,23 @@ public class BidirectionalList<T> extends LinearList<T> {
             count++;
         }
         return null;
+    }
+
+    /**
+     * Determine if a specific value is already in the List (in an ListElement)!
+     *
+     * @param value
+     * @return
+     */
+    public Boolean isInList(T value) {
+        BidirectionalListElement<T> listElement = this.listBegin;
+        while (listElement != null) {
+            if (listElement.getValue().equals(value)) {
+                return true;
+            }
+            listElement = listElement.getNext();
+        }
+        return false;
     }
 
     /**
@@ -242,19 +259,13 @@ public class BidirectionalList<T> extends LinearList<T> {
     /**
      * Delets the List-Element at index.
      * Returns false if no element was deleted.
-     *
+     * @throws ListSizeExceededException
      * @param index
      */
     @Override
-    public Boolean deleteAt(Integer index) {
-        if (index < LIST_BEGIN || index > this.elementCount) {
-            String exception;
-            exception =  String.format("Index \"%d\" liegt außerhalb der Grenzen [%d,%d]\n",
-                    index, LIST_BEGIN, this.elementCount);
-            System.err.println(exception);
-            throw new ListMaxSizeExceededException(exception);
-        }
-        else if (index == LIST_BEGIN) {
+    public Boolean deleteAt(Integer index) throws ListSizeExceededException {
+        indexInRange(index); // if not throws a ListSizeExceededException
+        if (index == LIST_BEGIN) {
             this.listBegin = listBegin.getNext();
             this.listBegin.setPrevious(null);
             this.elementCount--;

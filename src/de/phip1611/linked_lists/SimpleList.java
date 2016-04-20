@@ -24,11 +24,21 @@ public class SimpleList<T> extends LinearList<T> {
      * @param value
      */
     @Override
-    public void append(T value) throws ListMaxSizeExceededException {
+    public void append(T value) throws ListSizeExceededException {
+        // Elemente dürfen nur einmalig hinzugefügt werden
+        if (this.strictMode) {
+            if (isInList(value)) {
+                System.err.println(value + "ist bereits in der Liste!");
+                throw new ElementAlreadyInListException(
+                        "Element "+value.toString()+"ist bereits in der Liste. Strict Mode aktiv!");
+            }
+        }
+
+
         LinearListElement<T> le = new LinearListElement<>(value);
         // Liste ist noch leer
         if (this.elementCount == MAX_SIZE) {
-            throw new ListMaxSizeExceededException();
+            throw new ListSizeExceededException();
         }
         if (this.listBegin == null) {
             this.listBegin = le;
@@ -49,17 +59,15 @@ public class SimpleList<T> extends LinearList<T> {
      * @param value
      */
     @Override
-    public Boolean insert(Integer index, T value) throws ListMaxSizeExceededException {
+    public Boolean insert(Integer index, T value) throws ListSizeExceededException {
         LinearListElement<T> le = new LinearListElement<>(value);
         if (this.elementCount == MAX_SIZE) {
-            throw new ListMaxSizeExceededException();
+            throw new ListSizeExceededException();
         }
-
         int count = LIST_BEGIN;
+        // Throws an Exception if is not in Range
+        indexInRange(index);
 
-        if (index < LIST_BEGIN || index > this.elementCount) {
-            return false;
-        }
         if (this.listBegin == null && index == 1) {
             this.listBegin = le;
             return true;
@@ -126,10 +134,8 @@ public class SimpleList<T> extends LinearList<T> {
      */
     @Override
     public T getValue(Integer index) {
-        if (index < LIST_BEGIN || index > this.elementCount) {
-            return null;
-        }
-        else {
+        // Throws an Exception if is not in Range
+        if (indexInRange(index)) {
             LinearListElement<T> listElement = this.listBegin;
             Integer count = LIST_BEGIN;
             while (listElement != null) {
@@ -140,8 +146,8 @@ public class SimpleList<T> extends LinearList<T> {
                     count++;
                 }
             }
-            return null; // this should never be reached, just fallback
         }
+        return null; // this should never be reached, just fallback
     }
 
     /**
@@ -182,12 +188,12 @@ public class SimpleList<T> extends LinearList<T> {
      * @param index
      */
     @Override
-    public Boolean deleteAt(Integer index) {
+    public Boolean deleteAt(Integer index) throws ListSizeExceededException {
         Integer count = LIST_BEGIN;
 
-        if (index < LIST_BEGIN || index > this.elementCount) {
-            return false;
-        }
+        // Throws an Exception if not.
+        indexInRange(index);
+
         if (this.listBegin == null) { // Liste leer
             return false;
         }
@@ -309,26 +315,6 @@ public class SimpleList<T> extends LinearList<T> {
             }
         }
         return deletedAny;
-    }
-
-
-
-    /**
-     * Determine if a specific value is already in the List (in an ListElement)!
-     *
-     * @param value
-     * @return
-     */
-    @Override
-    public Boolean isInList(T value) {
-        LinearListElement<T> listElement = this.listBegin;
-        while (listElement != null) {
-            if (listElement.getValue().equals(value)) {
-                return true;
-            }
-            listElement = listElement.getNext();
-        }
-        return false;
     }
 
     /**
