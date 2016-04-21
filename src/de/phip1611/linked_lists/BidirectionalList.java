@@ -448,12 +448,13 @@ public class BidirectionalList<T> extends LinearList<T> {
     }
 
     /**
-     * Returns the last Element of the list without
+     * Returns the last Element/value of the list without
      * deleting it (unlike pop()).
      */
     public T getLast() {
         if (listEnd != null) {
-            return getValue(elementCount);
+            return listEnd.getValue();
+            //return getValue(elementCount);
         }
         return null;
     }
@@ -466,7 +467,7 @@ public class BidirectionalList<T> extends LinearList<T> {
         this.listBegin = null;
         this.listEnd = null;
         this.elementCount = 0;
-        // Garbage Collection should kill all the lists
+        // Garbage Collection should kill all the listselements
         // cause they never will be used again
     }
 
