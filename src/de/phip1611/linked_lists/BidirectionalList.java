@@ -182,15 +182,36 @@ public class BidirectionalList<T> extends LinearList<T> {
         indexInRange(index); // if not it throws a Exception
 
         // Vorwärts iterieren
-        int count = List.LIST_BEGIN;
-        BidirectionalListElement currentListElement = this.listBegin;
-        while (currentListElement != null) {
-            if (count == index) {
-                return (T) currentListElement.getValue();
-            }
-            currentListElement = currentListElement.getNext();
-            count++;
+        int count;
+
+        if (index == LIST_BEGIN) {
+            return listBegin.getValue();
         }
+        else if (index == elementCount) {
+            return listEnd.getValue();
+        }
+        else if ((elementCount-index+1) > elementCount/2) {
+            count = List.LIST_BEGIN;
+            BidirectionalListElement currentListElement = this.listBegin;
+            while (currentListElement != null) {
+                if (count == index) {
+                    return (T) currentListElement.getValue();
+                }
+                currentListElement = currentListElement.getNext();
+                count++;
+            }
+        } else {
+            count = elementCount;
+            BidirectionalListElement currentListElement = this.listBegin;
+            while (currentListElement != null) {
+                if (count == index) {
+                    return (T) currentListElement.getValue();
+                }
+                currentListElement = currentListElement.getPrevious();
+                count--;
+            }
+        }
+
         return null;
     }
 
@@ -424,6 +445,17 @@ public class BidirectionalList<T> extends LinearList<T> {
                 current = current.getNext();
             }
         }
+    }
+
+    /**
+     * Returns the last Element of the list without
+     * deleting it (unlike pop()).
+     */
+    public T getLast() {
+        if (listEnd != null) {
+            return getValue(elementCount);
+        }
+        return null;
     }
 
     /**

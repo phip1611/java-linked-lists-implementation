@@ -85,7 +85,7 @@ public abstract class List<T> implements Clearable {
         this.strictMode = mode;
     }
 
-    public Boolean getMode() {
+    public boolean getMode() {
         return this.strictMode;
     }
 
@@ -93,7 +93,15 @@ public abstract class List<T> implements Clearable {
      * Get the Number of Elements in the List!
      * @return
      */
-    public Integer getElementCount() {
+    public int getElementCount() {
+        return this.elementCount;
+    }
+
+    /**
+     * @Alias this.getElementCount()
+     * @return
+     */
+    public int size() {
         return this.elementCount;
     }
 
