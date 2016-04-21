@@ -8,4 +8,4 @@ such as pop() (to use it as a stack), several delete-methods and many more!
 
 Class Hierarchy: List (abstract) > LinearList (abstract) > SimpleList, BidirectionalList
 
-Class Hierarchie:  ListElement (abstract) > LinearListElement > BidirectionalListElement
+Class Hierarchy:  ListElement (abstract) > LinearListElement > BidirectionalListElement
