@@ -238,7 +238,7 @@ public class BidirectionalList<T> extends LinearList<T> {
     }
 
     /**
-     * Determine if a specific value is already in the List (in an ListElement)!
+     * Determine if a specific value is already in the List (in a ListElement)!
      *
      * @param value
      * @return
