@@ -13,8 +13,7 @@ import java.util.NoSuchElementException;
  * Abstract representation of a Linear List.
  * Monodirectional-Lists (not bidirectional) shall implement this.
  */
-public abstract class LinearList<T> extends List<T> implements Collection<T>, Iterator<T>, Iterable<T> {
-
+public abstract class LinearList<T> extends List<T> implements Collection<T>, Iterator<T>, Iterable<T>, java.util.List<T> {
     /**
      * You will need this to make Lists iterable and to find out at
      * which point of iteration you are right know.
@@ -94,7 +93,7 @@ public abstract class LinearList<T> extends List<T> implements Collection<T>, It
      * @param index
      * @return
      */
-    public abstract T getValue(Integer index);
+    public abstract T getValue(int index);
 
     /**
      * Returns the index of the first
