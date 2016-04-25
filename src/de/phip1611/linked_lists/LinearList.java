@@ -1,5 +1,6 @@
 package de.phip1611.linked_lists;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -12,7 +13,7 @@ import java.util.NoSuchElementException;
  * Abstract representation of a Linear List.
  * Monodirectional-Lists (not bidirectional) shall implement this.
  */
-public abstract class LinearList<T> extends List<T> implements Iterator<T>, Iterable<T> {
+public abstract class LinearList<T> extends List<T> implements Collection<T>, Iterator<T>, Iterable<T> {
 
     /**
      * You will need this to make Lists iterable and to find out at
@@ -47,20 +48,20 @@ public abstract class LinearList<T> extends List<T> implements Iterator<T>, Iter
      * Appends data to the List.
      * @param value
      */
-    public abstract void append(T value) throws ListSizeExceededException;
+    public abstract boolean append(T value) throws ListSizeExceededException;
 
     /**
      * Inserts data to the List.
      * @param value
      */
-    public abstract Boolean insert(Integer index, T value) throws ListSizeExceededException;
+    public abstract boolean insert(Integer index, T value) throws ListSizeExceededException;
 
 
     /**
      * Determines whether the index is in
      * the lists valid range.
      */
-    public Boolean indexInRange(Integer index) {
+    public boolean indexInRange(Integer index) {
         boolean indexInRange = (LIST_BEGIN <= index && index <= elementCount);
         if (!indexInRange) {
             StringBuilder exceptionMessageSb = new StringBuilder();
@@ -117,14 +118,17 @@ public abstract class LinearList<T> extends List<T> implements Iterator<T>, Iter
      * Returns false if no element was deleted.
      * @param index
      */
-    public abstract Boolean deleteAt(Integer index);
+    public abstract boolean removeAt(Integer index);
 
     /**
+     * Update 2016-04-25:
+     * This is already included due to java.util.Collection is implemented.
+     *
      * Deletes only the first occurrence of the value in the list.
      * Returns false if no element was deleted.
      * @param value
      */
-    public abstract Boolean delete(T value);
+    //public abstract boolean remove(Object value);
 
     /**
      * Deletes all occurrences of the value in the list.
@@ -132,7 +136,7 @@ public abstract class LinearList<T> extends List<T> implements Iterator<T>, Iter
      * @param value
      * @return
      */
-    public abstract Boolean deleteAll(T value);
+    public abstract boolean removeAll(T value);
 
     /**
      * Determine if a specific value is already in the List (in an ListElement)!
@@ -140,7 +144,7 @@ public abstract class LinearList<T> extends List<T> implements Iterator<T>, Iter
      * @param value
      * @return
      */
-    public Boolean isInList(T value) {
+    public boolean isInList(T value) {
         LinearListElement<T> listElement = this.listBegin;
         while (listElement != null) {
             if (listElement.getValue().equals(value)) {

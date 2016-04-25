@@ -13,35 +13,35 @@ public abstract class List<T> implements Clearable {
     /**
      * Max count of Elements a list can hold.
      */
-    public static final Integer MAX_SIZE = Integer.MAX_VALUE;
+    public static final int MAX_SIZE = Integer.MAX_VALUE;
 
     /**
      * Set strictMode to this if it should not be allowed to add several items more than once.
      */
-    public static final Boolean STRICT_MODE = true;
+    public static final boolean STRICT_MODE = true;
 
     /**
      * Set strictMode to this if it should not be allowed to add several items more than once.
      */
-    public static final Boolean SLACK_MODE = false;
+    public static final boolean SLACK_MODE = false;
 
     /**
      * DEFAULT-Value for this.strictMode
      */
-    public static final Boolean DEFAULT_MODE = List.SLACK_MODE;
+    public static final boolean DEFAULT_MODE = List.SLACK_MODE;
 
     /**
-     * Whenever you want to insert or delete an Element
+     * Whenever you want to insert or remove an Element
      * this is the base value for the index. For example causes
      * insert(List.LIST_BEGIN, ...) on an empty List
      * that the first ListElement will be created.
      */
-    public static final Integer LIST_BEGIN = 1;
+    public static final int LIST_BEGIN = 1;
 
     /**
      * The internal Counter for Elements in the List.
      */
-    protected Integer elementCount;
+    protected int elementCount;
 
     /**
      * Reference to the very first Element of the list/the beginning.
@@ -110,7 +110,7 @@ public abstract class List<T> implements Clearable {
      * @param value
      * @return
      */
-    public abstract Boolean isInList(T value);
+    public abstract boolean isInList(T value);
 
     /**
      * Deletes all Elements in the List that matches the parameter.
@@ -118,7 +118,7 @@ public abstract class List<T> implements Clearable {
      * @param value
      * @return
      */
-    public abstract Boolean deleteAll(T value);
+    public abstract boolean removeAll(T value);
 
     /**
      * Brings List into an String-readable representation.

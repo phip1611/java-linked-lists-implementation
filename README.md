@@ -13,6 +13,7 @@ For a very simple case where you can use one of my lists for example
 have a look at this: https://gist.github.com/phip1611/bbb4e461d57bcbee52c21900e753b21a
 
 Full feature List of BidirectionalList (the List that you should use!)
+- NEW: ALL the functionality from java.util.Collection! (Interface)
 - append items
 - insert items
 - delete(value): deletes the first occurrence of the element in the List
