@@ -74,13 +74,15 @@ public class SimpleList<T> extends LinearList<T> {
         // Throws an Exception if is not in Range
         indexInRange(index);
 
-        if (this.listBegin == null && index == 1) {
+        if (this.listBegin == null && index == LIST_BEGIN) {
             this.listBegin = le;
+            this.elementCount++;
             return true;
         }
-        if (index == LIST_BEGIN) {
+        else if (index == LIST_BEGIN) {
             le.setNext(this.listBegin);
             this.listBegin = le;
+            this.elementCount++;
             return true;
         } else {
             LinearListElement<T> previousElement, listElement;
@@ -96,6 +98,7 @@ public class SimpleList<T> extends LinearList<T> {
                 listElement = listElement.getNext();
                 count++;
             }
+            this.elementCount++;
         }
         return false; // this point should never be reached but its a fallback
     }
@@ -122,7 +125,7 @@ public class SimpleList<T> extends LinearList<T> {
             this.elementCount--;
             return returnThis;
         } else {
-            while (listElement.hasNext()) {
+            while (listElement != null) {
                 previousElement = listElement;
                 listElement = listElement.getNext();
             }

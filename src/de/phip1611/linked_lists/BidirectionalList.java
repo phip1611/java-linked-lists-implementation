@@ -75,16 +75,6 @@ public class BidirectionalList<T> extends LinearList<T> {
      */
     @Override
     public boolean insert(Integer index, T value) throws ListSizeExceededException {
-        // Elemente dürfen nur einmalig hinzugefügt werden
-        if (this.strictMode) {
-            if (isInList(value)) {
-                System.err.println(value + "ist bereits in der Liste!");
-                throw new ElementAlreadyInListException(
-                        "Element "+value.toString()+"ist bereits in der Liste. Strict Mode aktiv!");
-            }
-        }
-
-
         this.indexInRange(index); // if not throws a ListSizeExceededException
 
         // Elemente dürfen nur einmalig hinzugefügt werden

@@ -61,7 +61,7 @@ public abstract class LinearList<T> extends List<T> implements Collection<T>, It
      * the lists valid range.
      */
     public boolean indexInRange(Integer index) {
-        boolean indexInRange = (LIST_BEGIN <= index && index <= elementCount);
+        boolean indexInRange = (index == LIST_BEGIN || index >= LIST_BEGIN && index <= elementCount);
         if (!indexInRange) {
             StringBuilder exceptionMessageSb = new StringBuilder();
             String exceptionMessage;
