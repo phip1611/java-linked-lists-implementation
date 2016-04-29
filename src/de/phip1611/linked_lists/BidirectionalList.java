@@ -36,35 +36,8 @@ public class BidirectionalList<T> extends LinearList<T> {
      * @param value
      */
     @Override
-    public boolean append(T value) throws ListSizeExceededException {
-        // Elemente dürfen nur einmalig hinzugefügt werden
-        if (this.strictMode) {
-            if (isInList(value)) {
-                System.err.println(value + " ist bereits in der Liste!");
-                throw new ElementAlreadyInListException(
-                        "Element "+value.toString()+" ist bereits in der Liste. Strict Mode aktiv!");
-                // return false;
-            }
-        }
-
-        if (this.listBegin == null) {
-            // die Liste ist leer
-            this.listBegin = new BidirectionalListElement<>(value);
-            this.listEnd = this.listBegin;
-        }
-        else if (this.elementCount == 1) {
-            this.listBegin.setNext(new BidirectionalListElement<>(value));
-            this.listEnd = this.listBegin.getNext();
-            this.listEnd.setPrevious(this.listBegin);
-
-        } else {
-            BidirectionalListElement tmp = this.listEnd;
-            this.listEnd = new BidirectionalListElement(value);
-            this.listEnd.setPrevious(tmp);
-            tmp.setNext(this.listEnd);
-        }
-        this.elementCount++;
-        return true;
+    public boolean append(T value) throws ListSizeExceededException, ListIndexOutOfBoundsException {
+        return insert(elementCount+1, value);
     }
 
     /**
@@ -74,8 +47,12 @@ public class BidirectionalList<T> extends LinearList<T> {
      * @param value
      */
     @Override
-    public boolean insert(Integer index, T value) throws ListSizeExceededException {
-        this.indexInRange(index); // if not throws a ListSizeExceededException
+    public boolean insert(int index, T value) throws ListSizeExceededException, ListIndexOutOfBoundsException {
+        if (!indexInRange(index)) {
+            throw new ListIndexOutOfBoundsException(getIndexOutOfBoundsExceptionMessage(index));
+        } else if (elementCount == List.MAX_SIZE) {
+            throw new ListSizeExceededException("Maximum amount of elements is "+this.elementCount);
+        }
 
         // Elemente dürfen nur einmalig hinzugefügt werden
         if (this.strictMode) {
@@ -87,10 +64,20 @@ public class BidirectionalList<T> extends LinearList<T> {
         }
 
         if (index == LIST_BEGIN) {
-            BidirectionalListElement insertElement = new BidirectionalListElement(value);
-            insertElement.setNext(this.listBegin);
-            this.listBegin.setPrevious(insertElement);
-            this.listBegin = insertElement;
+            BidirectionalListElement le = new BidirectionalListElement(value);
+            le.setNext(this.listBegin);
+            this.listBegin.setPrevious(le);
+            this.listBegin = le;
+            this.elementCount++;
+            return true;
+        }
+        else if (index == elementCount+1) { // am Listenende einfügen
+            BidirectionalListElement<T> le = new BidirectionalListElement<>(value);
+            this.listEnd.setNext(le);
+            le.setPrevious(this.listEnd);
+            this.listEnd = le;
+            this.elementCount++;
+            return true;
         }
         else {
             int iterateCounter;
@@ -108,7 +95,8 @@ public class BidirectionalList<T> extends LinearList<T> {
                         insertElement.setNext(currentListElement);
                         currentListElement.setPrevious(insertElement);
                         insertElement.setPrevious(previousElement);
-                        break;
+                        this.elementCount++;
+                        return true;
                     }
                     currentListElement = currentListElement.getNext();
                     iterateCounter++;
@@ -127,15 +115,15 @@ public class BidirectionalList<T> extends LinearList<T> {
                         insertElement.setNext(currentListElement);
                         currentListElement.setPrevious(insertElement);
                         insertElement.setPrevious(previousElement);
-                        break;
+                        this.elementCount++;
+                        return true;
                     }
                     currentListElement = currentListElement.getPrevious();
                     iterateCounter--;
                 }
             }
         }
-        this.elementCount++;
-        return true;
+        return false;
     }
 
     /**
@@ -375,7 +363,7 @@ public class BidirectionalList<T> extends LinearList<T> {
                 deletedAny = true;
                 elementCount--;
                 if (justOneIteration) { // bei remove(Object o)
-                    return deletedAny;
+                    return true;
                 }
             }
             currentListElement = currentListElement.getNext();
@@ -502,7 +490,7 @@ public class BidirectionalList<T> extends LinearList<T> {
      *                                       (<tt>index &lt; 0 || index &gt; size()</tt>)
      */
     @Override
-    public void add(int index, T element) {
+    public void add(int index, T element) throws ListSizeExceededException, ListIndexOutOfBoundsException {
         this.insert(index, element);
     }
 
@@ -801,7 +789,7 @@ public class BidirectionalList<T> extends LinearList<T> {
      * call
      */
     @Override
-    public boolean add(T t) {
+    public boolean add(T t) throws ListSizeExceededException, ListIndexOutOfBoundsException {
         return this.append(t);
     }
 

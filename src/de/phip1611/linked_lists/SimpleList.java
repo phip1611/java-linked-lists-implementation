@@ -65,14 +65,16 @@ public class SimpleList<T> extends LinearList<T> {
      * @param value
      */
     @Override
-    public boolean insert(Integer index, T value) throws ListSizeExceededException {
-        LinearListElement<T> le = new LinearListElement<>(value);
-        if (this.elementCount == MAX_SIZE) {
-            throw new ListSizeExceededException();
+    public boolean insert(int index, T value) {
+        if (!indexInRange(index)) {
+            throw new ListIndexOutOfBoundsException(getIndexOutOfBoundsExceptionMessage(index));
+        } else if (elementCount == List.MAX_SIZE) {
+            throw new ListSizeExceededException("Maximum amount of elements is "+this.elementCount);
         }
+
         int count = LIST_BEGIN;
-        // Throws an Exception if is not in Range
-        indexInRange(index);
+        LinearListElement<T> le = new LinearListElement<>(value);
+
 
         if (this.listBegin == null && index == LIST_BEGIN) {
             this.listBegin = le;
@@ -89,16 +91,16 @@ public class SimpleList<T> extends LinearList<T> {
             previousElement = null;
             listElement = this.listBegin;
             while (listElement != null) {
-                if (index.equals(count)) {
+                if (index == count) {
                     previousElement.setNext(le);
                     le.setNext(listElement);
+                    this.elementCount++;
                     return true;
                 }
                 previousElement = listElement;
                 listElement = listElement.getNext();
                 count++;
             }
-            this.elementCount++;
         }
         return false; // this point should never be reached but its a fallback
     }

@@ -47,36 +47,36 @@ public abstract class LinearList<T> extends List<T> implements Collection<T>, It
      * Appends data to the List.
      * @param value
      */
-    public abstract boolean append(T value) throws ListSizeExceededException;
+    public abstract boolean append(T value) throws ListSizeExceededException, ListIndexOutOfBoundsException;
 
     /**
      * Inserts data to the List.
      * @param value
      */
-    public abstract boolean insert(Integer index, T value) throws ListSizeExceededException;
+    public abstract boolean insert(int index, T value) throws ListSizeExceededException, ListIndexOutOfBoundsException;
 
 
     /**
      * Determines whether the index is in
-     * the lists valid range.
+     * the lists valid range. Hint:
+     * List begin starts at 1.
      */
-    public boolean indexInRange(Integer index) {
-        boolean indexInRange = (index == LIST_BEGIN || index >= LIST_BEGIN && index <= elementCount);
-        if (!indexInRange) {
-            StringBuilder exceptionMessageSb = new StringBuilder();
-            String exceptionMessage;
-            exceptionMessageSb.append("Index \"");
-            exceptionMessageSb.append(index);
-            exceptionMessageSb.append("\" liegt außerhalb der Listen-Grenzen [");
-            exceptionMessageSb.append(LIST_BEGIN);
-            exceptionMessageSb.append(",");
-            exceptionMessageSb.append((this.elementCount==0?"-":this.elementCount));
-            exceptionMessageSb.append("]");
-            exceptionMessage = exceptionMessageSb.toString();
-            System.err.println(exceptionMessage);
-            throw new ListSizeExceededException(exceptionMessage);
-        }
-        return true;
+    public boolean indexInRange(int index) {
+        return (index == LIST_BEGIN || index >= LIST_BEGIN && index <= elementCount);
+    }
+
+
+    protected String getIndexOutOfBoundsExceptionMessage(int index) {
+        StringBuilder exceptionMessageSb = new StringBuilder();
+        String exceptionMessage;
+        exceptionMessageSb.append("Index \"");
+        exceptionMessageSb.append(index);
+        exceptionMessageSb.append("\" is out of bounds of list. Bounds: [");
+        exceptionMessageSb.append(LIST_BEGIN);
+        exceptionMessageSb.append(",");
+        exceptionMessageSb.append((this.elementCount==0?"-":this.elementCount));
+        exceptionMessageSb.append("]");
+        return exceptionMessageSb.toString();
     }
 
 
